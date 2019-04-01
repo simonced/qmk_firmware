@@ -14,6 +14,10 @@ extern keymap_config_t keymap_config;
 // symbols layer
 #define _SY 2
 
+// windows/desktop layer
+#define _WIN 3
+
+// unused adjust layer
 #define _ADJUST 16
 
 
@@ -21,25 +25,47 @@ extern keymap_config_t keymap_config;
 /*define key combinaisions*/
 /*======================================================================*/
 
-// IME toggle
-#define EISU LALT(KC_GRV)
+// == LAYERS RELATED ==
 
 // my custom switches to different layers
 #define RSTQ TO(_QWERTY) // will force default layer
 
-// motion layer
+// motion layer switch
 #define SW_ML LT(_MO, KC_F) // temporary
 #define T_MO TG(_MO) // toggle
 
-// symbols layer
-#define SW_SL LT(_SY, KC_ENT) // temporary on F
+// symbols layer switch
+#define SW_SL LT(_SY, KC_ENT) // temporary
 #define T_SY TG(_SY) // toggle
+
+// win layer switch
+#define SW_WL LT(_WIN, KC_D)
+
+// == SHORTCUTS RELATED ==
+
+// IME toggle
+#define EISU LALT(KC_GRV)
 
 // ctrl and esc on the same key
 #define CTR_ESC MT(MOD_LCTL, KC_ESC)
 // shift and capslocks on the same key
 #define SFT_CAP MT(MOD_LSFT, KC_CAPS)
 
+// changing virtual desktop (only left and right)
+#define DESK_R G(C(KC_RIGHT))
+#define DESK_L G(C(KC_LEFT))
+
+// moving windows in screen(s) (4 directions)
+#define WIN_MR G(S(KC_RIGHT))
+#define WIN_ML G(S(KC_LEFT))
+#define WIN_MU G(S(KC_UP))
+#define WIN_MD G(S(KC_DOWN))
+
+// resizing windows
+#define WIN_RR G(KC_RIGHT)
+#define WIN_RL G(KC_LEFT)
+#define WIN_RU G(KC_UP)
+#define WIN_RD G(KC_DOWN)
 
 /*======================================================================*/
 /*layouts*/
@@ -62,11 +88,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------------------------------------------------------------.
    */
   [_QWERTY] = LAYOUT( \
-    KC_GRV , KC_1,    KC_2, KC_3, KC_4,  KC_5,    KC_MINS,                         KC_EQL,  KC_6,   KC_7,  KC_8,     KC_9,    KC_0,    KC_HOME, \
-    KC_TAB , KC_Q,    KC_W, KC_E, KC_R,  KC_T,    KC_LBRC,                         KC_RBRC, KC_Y,   KC_U,  KC_I,     KC_O,    KC_P,    KC_END,  \
-    CTR_ESC, KC_A,    KC_S, KC_D, SW_ML, KC_G,    KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
-    SFT_CAP, KC_Z,    KC_X, KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
-    KC_LGUI, KC_LALT, T_SY, EISU,        KC_LSFT, KC_LCTL, KC_SPC,          SW_SL, KC_RCTL, KC_RSFT,       RSTQ,     T_MO,    KC_NO,   KC_PGDN  \
+    KC_GRV , KC_1,    KC_2,  KC_3, KC_4,  KC_5,    KC_MINS,                         KC_EQL,  KC_6,   KC_7,  KC_8,     KC_9,    KC_0,    KC_HOME, \
+    KC_TAB , KC_Q,    KC_W,  KC_E, KC_R,  KC_T,    KC_LBRC,                         KC_RBRC, KC_Y,   KC_U,  KC_I,     KC_O,    KC_P,    KC_END,  \
+    CTR_ESC, KC_A,    KC_S, SW_WL, SW_ML, KC_G,    KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
+    SFT_CAP, KC_Z,    KC_X,  KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
+    KC_LGUI, KC_LALT, T_SY,  EISU,        KC_LSFT, KC_LCTL, KC_SPC,          SW_SL, KC_RCTL, KC_RSFT,       RSTQ,     T_MO,    KC_NO,   KC_PGDN  \
   ),
 
   /*
@@ -87,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,                            KC_F12,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10, _______, \
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,                           KC_NO , KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,_______, _______, \
-    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______,  KC_UP , _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, KC_LEFT, KC_DOWN, KC_RIGHT \
   ),
 
@@ -111,6 +137,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, KC_1,    KC_2,    KC_3,     KC_4,    KC_5,      KC_MINS ,                             KC_EQL,  KC_DQT, KC_LCBR, KC_RCBR, KC_QUOT, KC_PIPE, _______, \
     _______, KC_6,    KC_7,    KC_8,     KC_9,    KC_0,      _______ ,                            _______, _______, KC_LBRC, KC_RBRC, _______, KC_NUBS, _______, \
     _______, _______, _______, _______,           _______,   _______ ,_______,           _______, _______, _______,          _______, _______, KC_PSCR, _______  \
+  ),
+
+  // Windowns / Desktop shortcuts (SW_WL) switch windows layer
+  [_WIN] = LAYOUT(
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______,  WIN_RL,  WIN_RD,  WIN_RU,  WIN_RR, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______,  WIN_ML,  WIN_MD,  WIN_MU,  WIN_MR, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______,  DESK_L,  DESK_R, _______, _______, _______, \
+    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, _______, _______, _______  \
   ),
 
   /* Adjust (not used)
