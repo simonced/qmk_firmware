@@ -17,6 +17,9 @@ extern keymap_config_t keymap_config;
 // windows/desktop layer
 #define _WIN 3
 
+// selection layer
+#define _SE 4
+
 // unused adjust layer
 #define _ADJUST 16
 
@@ -40,6 +43,9 @@ extern keymap_config_t keymap_config;
 
 // win layer switch
 #define SW_WL LT(_WIN, KC_D)
+
+// text selection switch
+#define SW_SE LT(_SE, KC_V)
 
 // == SHORTCUTS RELATED ==
 
@@ -67,6 +73,14 @@ extern keymap_config_t keymap_config;
 #define WIN_RU G(KC_UP)
 #define WIN_RD G(KC_DOWN)
 
+// text selection (for _SE layer)
+#define SEL_L S(KC_LEFT)
+#define SEL_D S(KC_DOWN)
+#define SEL_U S(KC_UP)
+#define SEL_R S(KC_RIGHT)
+#define SEL_H S(KC_HOME)
+#define SEL_E S(KC_END)
+
 /*======================================================================*/
 /*layouts*/
 /*======================================================================*/
@@ -91,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV , KC_1,    KC_2,  KC_3, KC_4,  KC_5,    KC_MINS,                         KC_EQL,  KC_6,   KC_7,  KC_8,     KC_9,    KC_0,    KC_HOME, \
     KC_TAB , KC_Q,    KC_W,  KC_E, KC_R,  KC_T,    KC_LBRC,                         KC_RBRC, KC_Y,   KC_U,  KC_I,     KC_O,    KC_P,    KC_END,  \
     CTR_ESC, KC_A,    KC_S, SW_WL, SW_ML, KC_G,    KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
-    SFT_CAP, KC_Z,    KC_X,  KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
+    SFT_CAP, KC_Z,    KC_X,  KC_C, SW_SE, KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
     KC_LGUI, KC_LALT, KC_NO, EISU,        KC_LSFT, KC_LCTL, KC_SPC,          SW_SL, KC_RCTL, KC_RSFT,       RSTQ,     KC_NO,   KC_NO,   KC_PGDN  \
   ),
 
@@ -145,6 +159,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______,                          _______,  WIN_RL,  WIN_RD,  WIN_RU,  WIN_RR, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,                          _______,  WIN_ML,  WIN_MD,  WIN_MU,  WIN_MR, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______,  DESK_L,  DESK_R, _______, _______, _______, \
+    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, _______, _______, _______  \
+  ),
+
+  // Selection layer (will help when selecting text)
+  [_SE] = LAYOUT(
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______,   SEL_L,   SEL_D,   SEL_U,   SEL_R, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______,   SEL_H,   SEL_E, _______, _______, _______, \
     _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, _______, _______, _______  \
   ),
 
