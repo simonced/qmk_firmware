@@ -38,7 +38,9 @@ extern keymap_config_t keymap_config;
 #define T_MO TG(_MO) // toggle (unused)
 
 // symbols layer switch
-#define SW_SL LT(_SY, KC_ENT) // temporary
+// #define SW_SL LT(_SY, KC_ENT) // temporary (a bit painful for the whole day...)
+#define SW_SLE LT(_SY, KC_E) // temporary (E on left hand)
+#define SW_SLI LT(_SY, KC_I) // temporary (I on right hand)
 #define T_SY TG(_SY) // toggle (unused)
 
 // win layer switch
@@ -102,11 +104,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,----------------------------------------------------------------------------------------------------------------------.
    */
   [_QWERTY] = LAYOUT( \
-    KC_GRV , KC_1,    KC_2,  KC_3, KC_4,  KC_5,    KC_MINS,                         KC_EQL,  KC_6,   KC_7,  KC_8,     KC_9,    KC_0,    KC_HOME, \
-    KC_TAB , KC_Q,    KC_W,  KC_E, KC_R,  KC_T,    KC_LBRC,                         KC_RBRC, KC_Y,   KC_U,  KC_I,     KC_O,    KC_P,    KC_END,  \
-    CTR_ESC, KC_A,    KC_S, SW_WL, SW_ML, KC_G,    KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
-    SFT_CAP, KC_Z,    KC_X,  KC_C, SW_SE, KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
-    KC_LGUI, KC_LALT, KC_NO, EISU,        KC_LSFT, KC_LCTL, KC_SPC,          SW_SL, KC_RCTL, KC_RSFT,       RSTQ,     KC_NO,   KC_NO,   KC_PGDN  \
+    KC_GRV , KC_1,    KC_2,  KC_3,   KC_4,  KC_5,    KC_MINS,                         KC_EQL,  KC_6,   KC_7,  KC_8,     KC_9,    KC_0,    KC_HOME, \
+    KC_TAB , KC_Q,    KC_W,  SW_SLE, KC_R,  KC_T,    KC_LBRC,                         KC_RBRC, KC_Y,   KC_U,  SW_SLI,   KC_O,    KC_P,    KC_END,  \
+    CTR_ESC, KC_A,    KC_S,  SW_WL,  SW_ML, KC_G,    KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
+    SFT_CAP, KC_Z,    KC_X,  KC_C,   SW_SE, KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
+    KC_LGUI, KC_LALT, KC_NO, EISU,          KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,       RSTQ,     KC_NO,   KC_NO,   KC_PGDN  \
   ),
 
   /*
