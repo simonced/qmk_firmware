@@ -44,7 +44,7 @@ extern keymap_config_t keymap_config;
 #define T_SY TG(_SY) // toggle (unused)
 
 // win layer switch
-#define SW_WL LT(_WIN, KC_D)
+#define SW_WL LT(_WIN, KC_G)
 
 // text selection switch
 #define SW_SE LT(_SE, KC_V)
@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT( \
     KC_GRV , KC_1,    KC_2,  KC_3,   KC_4,  KC_5,    KC_MINS,                         KC_EQL,  KC_6,   KC_7,  KC_8,     KC_9,    KC_0,    KC_HOME, \
     KC_TAB , KC_Q,    KC_W,  SW_SLE, KC_R,  KC_T,    KC_LBRC,                         KC_RBRC, KC_Y,   KC_U,  SW_SLI,   KC_O,    KC_P,    KC_END,  \
-    CTR_ESC, KC_A,    KC_S,  SW_WL,  SW_ML, KC_G,    KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
+    CTR_ESC, KC_A,    KC_S,  KC_D,   SW_ML, SW_WL,   KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
     SFT_CAP, KC_Z,    KC_X,  KC_C,   SW_SE, KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
     KC_LGUI, KC_LALT, KC_NO, EISU,          KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,       RSTQ,     KC_NO,   KC_NO,   KC_PGDN  \
   ),
