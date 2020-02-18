@@ -57,6 +57,7 @@ extern keymap_config_t keymap_config;
 
 // IME toggle
 #define EISU LALT(KC_GRV)
+#define LAYSW G(KC_SPC) // win + space to change keyboard layout in Windows
 
 // ctrl and esc on the same key
 #define CTR_ESC MT(MOD_LCTL, KC_ESC)
@@ -112,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB , KC_Q,    KC_W,  SW_SLE, KC_R,  KC_T,    KC_LBRC,                         KC_RBRC, KC_Y,   KC_U,  SW_SLI,   KC_O,    KC_P,    KC_END,  \
     CTR_ESC, KC_A,    KC_S,  SW_WL,  SW_ML, KC_G,    KC_DEL,                          KC_BSPC, KC_H,   KC_J,  KC_K,     KC_L,    KC_SCLN, KC_QUOT, \
     SFT_CAP, KC_Z,    KC_X,  KC_C,   SW_SE, KC_B,    KC_LALT,                         KC_ALGR, KC_N,   KC_M,  KC_COMM,  KC_DOT,  KC_SLSH, KC_PGUP, \
-    KC_LGUI, KC_LALT, KC_NO, EISU,          KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,       RSTQ,     KC_NO,   KC_NO,   KC_PGDN  \
+    KC_LGUI, KC_LALT, LAYSW, EISU,          KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,       RSTQ,     KC_NO,   KC_NO,   KC_PGDN  \
   ),
 
   /*
