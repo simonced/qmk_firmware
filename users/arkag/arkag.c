@@ -1,38 +1,12 @@
 #include "arkag.h"
+#include "eeprom.h"
 
 /*
  Current Layout and Keeb:
  https://github.com/arkag/qmk_firmware/blob/master/keyboards/mechmini/v2/keymaps/arkag/keymap.c
 */
 
-// Start: Written by konstantin: vomindoraan
-#include <ctype.h>
-#include <stdlib.h>
-#include <string.h>
-
-void send_unicode_hex_string(const char *str) {
-  if (!str) { return; } // Saftey net
-  while (*str) {
-    // Find the next code point (token) in the string
-    for (; *str == ' '; str++);
-    size_t n = strcspn(str, " "); // Length of the current token
-    char code_point[n+1];
-    strncpy(code_point, str, n);
-    code_point[n] = '\0'; // Make sure it's null-terminated
-
-    // Normalize the code point: make all hex digits lowercase
-    for (char *p = code_point; *p; p++) {
-            *p = tolower(*p);
-    }
-
-    // Send the code point as a Unicode input string
-    unicode_input_start();
-    send_string(code_point);
-    unicode_input_finish();
-    str += n; // Move to the first ' ' (or '\0') after the current token
-  }
-}
-// End: Written by konstantin: vomindoraan
+#include <stdbool.h>
 
 // Start: Written by Chris Lewis
 #ifndef MIN
@@ -45,11 +19,11 @@ void send_unicode_hex_string(const char *str) {
 #define TYPING_SPEED_MAX_VALUE 200
 uint8_t typing_speed = 0;
 
-void velocikey_accelerate() {
+void velocikey_accelerate(void) {
     if (typing_speed < TYPING_SPEED_MAX_VALUE) typing_speed += (TYPING_SPEED_MAX_VALUE / 50);
 }
 
-void velocikey_decelerate() {
+void velocikey_decelerate(void) {
   static uint16_t decay_timer = 0;
 
   if (timer_elapsed(decay_timer) > 500 || decay_timer == 0) {
@@ -79,6 +53,8 @@ flashState    flash_state   = no_flash;
 fadeState     fade_state    = add_fade;
 activityState state         = boot;
 
+float song_ussr[][2]     = SONG(USSR_ANTHEM);
+
 void set_color (Color new, bool update) {
   rgblight_sethsv_eeprom_helper(new.h, new.s, new.v, update);
 }
@@ -93,14 +69,14 @@ void reset_color(void) {
 
 Color mod_color(Color current_color, bool should_add, uint8_t change_amount) {
   save_color(underglow);
-  int addlim = 359 - change_amount;
+  int addlim = HUE_MAX - change_amount;
   int sublim = change_amount;
   int leftovers;
   if (should_add) {
     if (current_color.h <= addlim) {
       current_color.h += change_amount;
     } else {
-      leftovers = (359 + change_amount) % 359;
+      leftovers = (HUE_MAX + change_amount) % HUE_MAX;
       current_color.h  = 0 + leftovers;
     }
   } else {
@@ -108,7 +84,7 @@ Color mod_color(Color current_color, bool should_add, uint8_t change_amount) {
       current_color.h -= change_amount;
     } else {
       leftovers = change_amount - current_color.h;
-      current_color.h  = 359 - leftovers;
+      current_color.h  = HUE_MAX - leftovers;
     }
   }
   return current_color;
@@ -124,7 +100,6 @@ void check_state (void) {
       if (slept) {rgblight_mode_noeeprom(1);}
       activated = true;
       deactivated = false;
-      slept = false;
     }
     fade_interval = velocikey_match_speed(1, 25);
     if (timer_elapsed(active_timer) < INACTIVE_DELAY) {return;}
@@ -136,21 +111,9 @@ void check_state (void) {
     if (!deactivated) {
       deactivated = true;
       activated = false;
-      slept = false;
     }
     velocikey_decelerate();
     fade_interval = velocikey_match_speed(1, 25);
-    if (timer_elapsed(active_timer) < SLEEP_DELAY) {return;}
-    state = sleeping;
-    return;
-
-  case sleeping:
-    if (!slept) {
-      rgblight_mode_noeeprom(4);
-      slept = true;
-      activated = false;
-      deactivated = false;
-    }
     return;
 
   case boot:
@@ -165,7 +128,7 @@ void fade_rgb (void) {
   if (timer_elapsed(fade_timer) < fade_interval) {return;}
   switch (fade_state) {
   case add_fade:
-    if (underglow.h == 359) {
+    if (underglow.h == HUE_MAX) {
       fade_state = sub_fade;
       return;
     }
@@ -224,34 +187,25 @@ void set_os (uint8_t os, bool update) {
   }
   switch (os) {
   case OS_MAC:
-    set_unicode_input_mode(UC_OSX);
-    underglow = (Color){ 300, 255, 255 };
-    mod_primary_mask = MOD_GUI_MASK;
+    set_unicode_input_mode(UNICODE_MODE_MACOS);
+    underglow = (Color){ 213, 255, 255 };
     break;
   case OS_WIN:
-    set_unicode_input_mode(UC_WINC);
-    underglow = (Color){ 180, 255, 255 };
-    mod_primary_mask = MOD_CTL_MASK;
+    set_unicode_input_mode(UNICODE_MODE_WINCOMPOSE);
+    underglow = (Color){ 128, 255, 255 };
     break;
   case OS_NIX:
-    set_unicode_input_mode(UC_LNX);
-    underglow = (Color){ 60, 255, 255 };
-    mod_primary_mask = MOD_CTL_MASK;
+    set_unicode_input_mode(UNICODE_MODE_LINUX);
+    underglow = (Color){ 43, 255, 255 };
     break;
   default:
     underglow = (Color){ 0, 0, 255 };
-    mod_primary_mask = MOD_CTL_MASK;
   }
   set_color(underglow, update);
   flash_color           = underglow;
   flash_state           = flash_off;
   state                 = boot;
-  num_extra_flashes_off = 1;
-}
-
-void tap_key(uint8_t keycode) {
-  register_code(keycode);
-  unregister_code(keycode);
+  num_extra_flashes_off = 3;
 }
 
 // register GUI if Mac or Ctrl if other
@@ -288,55 +242,63 @@ void sec_mod(bool press) {
   }
 }
 
-void surround_type(uint8_t num_of_chars, uint16_t keycode, bool use_shift) {
+void multi_tap(uint8_t num_of_chars, uint16_t keycode, bool use_shift) {
   if (use_shift) {
     register_code(KC_LSFT);
   }
   for (int i = 0; i < num_of_chars; i++) {
-    tap_key(keycode);
+    tap_code(keycode);
   }
   if (use_shift) {
     unregister_code(KC_LSFT);
   }
-  for (int i = 0; i < (num_of_chars/2); i++) {
-    tap_key(KC_LEFT);
+}
+
+void pair_surround_type(uint8_t num_of_chars, uint16_t keycode, bool use_shift) {
+  for (int i = 0; i < num_of_chars; i++) {
+    (use_shift) ? register_mods(MOD_BIT( KC_LSFT)) : NULL;  
+    tap_code(keycode);
+    tap_code((keycode == KC_LCBR) ? KC_RCBR : (keycode == KC_LBRC) ? KC_RBRC : (keycode == KC_LPRN) ? KC_RPRN : KC_NO);
+    (use_shift) ? unregister_mods(MOD_BIT( KC_LSFT)) : NULL;
+    tap_code(KC_LEFT);
   }
+}
+
+void surround_type(uint8_t num_of_chars, uint16_t keycode, bool use_shift) {
+  for (int i = 0; i < num_of_chars; i++) {
+    (use_shift) ? register_mods(MOD_BIT( KC_LSFT)) : NULL;
+    tap_code(keycode);
+    (use_shift) ? unregister_mods(MOD_BIT( KC_LSFT)) : NULL;
+  }
+  multi_tap(num_of_chars / 2, KC_LEFT, false);
 }
 
 void long_keystroke(size_t num_of_keys, uint16_t keys[]) {
   for (int i = 0; i < num_of_keys-1; i++) {
     register_code(keys[i]);
   }
-  tap_key(keys[num_of_keys-1]);
+  tap_code(keys[num_of_keys-1]);
   for (int i = 0; i < num_of_keys-1; i++) {
     unregister_code(keys[i]);
   }
 }
 
-void dance_grv (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    tap_key(KC_GRV);
-  } else if (state->count == 2) {
-    surround_type(2, KC_GRAVE, false);
-  } else {
-    surround_type(6, KC_GRAVE, false);
-  }
+void pri_mod_keystroke(uint16_t key) {
+  pri_mod(true);
+  tap_code(key);
+  pri_mod(false);
 }
 
-void dance_quot (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    tap_key(KC_QUOT);
-  } else if (state->count == 2) {
-    surround_type(2, KC_QUOTE, false);
-  } else if (state->count == 3) {
-    surround_type(2, KC_QUOTE, true);
+void leader_end_user(void) {
+  // begin OS functions
+  if (leader_sequence_two_keys(KC_P, KC_B)) {
+    if (current_os == OS_WIN) {
+      long_keystroke(2, (uint16_t[]){KC_LGUI, KC_PAUSE});
+    } else {
+      return;
+    }
   }
-}
-
-void dance_strk (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    surround_type(4, KC_TILDE, true);
-  } else if (state->count == 2) {
+  if (leader_sequence_two_keys(KC_S, KC_S)) {
     if (current_os == OS_MAC) {
       long_keystroke(3, (uint16_t[]){KC_LGUI, KC_LSFT, KC_4});
     } else if (current_os == OS_WIN) {
@@ -345,24 +307,112 @@ void dance_strk (qk_tap_dance_state_t *state, void *user_data) {
       return;
     }
   }
-}
-
-void dance_3 (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    tap_key(KC_3);
-  } else if (state->count == 2) {
-    send_unicode_hex_string("00E8");
-  } else if (state->count == 3) {
-    send_unicode_hex_string("00E9");
+  if (leader_sequence_three_keys(KC_C, KC_A, KC_D)) {
+    if (current_os == OS_WIN) {
+      long_keystroke(3, (uint16_t[]){KC_LCTL, KC_LALT, KC_DEL});
+    } else {
+    }
   }
-}
-
-void dance_c (qk_tap_dance_state_t *state, void *user_data) {
-  if (state->count == 1) {
-    tap_key(KC_C);
-  } else if (state->count == 2) {
-    send_unicode_hex_string("00E7");
+  if (leader_sequence_three_keys(KC_C, KC_A, KC_E)) {
+    if (current_os == OS_WIN) {
+      long_keystroke(3, (uint16_t[]){KC_LCTL, KC_LALT, KC_END});
+    } else {
+    }
   }
+  // end OS functions
+
+  // begin format functions
+  if (leader_sequence_one_key(KC_B)) {
+    surround_type(2, KC_8, true);
+  }
+  if (leader_sequence_one_key(KC_I)) {
+    surround_type(2, KC_MINS, true);
+  }
+  if (leader_sequence_one_key(KC_U)) {
+    surround_type(4, KC_MINS, true);
+  }
+  if (leader_sequence_one_key(KC_S)) {
+    surround_type(4, KC_GRAVE, true);
+  }
+  if (leader_sequence_one_key(KC_C)) {
+    register_unicode(0x00E7); // ç
+  }
+  if (leader_sequence_two_keys(KC_A, KC_V)) {
+    surround_type(2, KC_QUOT, true);
+    pair_surround_type(2, KC_LCBR, true);
+    surround_type(2, KC_SPC, false);
+  }
+  if (leader_sequence_two_keys(KC_M, KC_L)) {
+    pair_surround_type(1, KC_LBRC, false);
+    SEND_STRING("LINK_NAME");
+    tap_code(KC_RGHT);
+    pair_surround_type(1, KC_LPRN, true);
+    pri_mod_keystroke(KC_V);
+  }
+  if (leader_sequence_two_keys(KC_C, KC_C)) {
+    surround_type(2, KC_GRAVE, false);
+  }
+  if (leader_sequence_three_keys(KC_C, KC_C, KC_C)) {
+    surround_type(6, KC_GRAVE, false);
+  }
+  if (leader_sequence_one_key(KC_E)) {
+    register_unicode(0x00E8); // è
+  }
+  if (leader_sequence_two_keys(KC_E, KC_E)) {
+    register_unicode(0x00E9); // é
+  }
+  // end format functions
+
+  // start fancy functions
+  if (leader_sequence_two_keys(KC_V, KC_P)) {
+    SEND_STRING("ggvG}x:set paste\ni");
+    pri_mod_keystroke(KC_V);
+  }
+  if (leader_sequence_three_keys(KC_C, KC_C, KC_ENT)) {
+    surround_type(6, KC_GRAVE, false);
+    pri_mod_keystroke(KC_V);
+    multi_tap(3, KC_RGHT, false);
+    tap_code(KC_ENTER);
+  }
+  if (leader_sequence_three_keys(KC_T, KC_C, KC_ENT)) {
+    multi_tap(3, KC_GRAVE, false);
+    pri_mod_keystroke(KC_V);
+    multi_tap(2, KC_ENTER, false);
+  }
+  // end fancy functions
+
+  // start typing functions
+  if (leader_sequence_two_keys(KC_T, KC_M)) {
+    register_unicode(0x2122); // ™
+  }
+  if (leader_sequence_two_keys(KC_D, KC_D)) {
+    SEND_STRING(".\\Administrator");
+  }
+  if (leader_sequence_three_keys(KC_D, KC_D, KC_D)) {
+    SEND_STRING(".\\Administrator");
+    tap_code(KC_TAB);
+    pri_mod_keystroke(KC_V);
+    tap_code(KC_ENTER);
+  }
+  if (leader_sequence_three_keys(KC_L, KC_O, KC_D)) {
+    send_unicode_string("ಠ__ಠ");
+  }
+  if (leader_sequence_three_keys(KC_M, KC_A, KC_P)) {
+    SEND_STRING("https://github.com/qmk/qmk_firmware/tree/master/users/arkag");
+  }
+  if (leader_sequence_two_keys(KC_F, KC_F)) {
+    send_unicode_string("(╯‵Д′)╯彡┻━┻");
+  }
+  if (leader_sequence_three_keys(KC_F, KC_F, KC_F)) {
+    send_unicode_string("┬─┬ノ( º _ º ノ)");
+  }
+  if (leader_sequence_three_keys(KC_L, KC_O, KC_L)) {
+    send_unicode_string("( ͡° ͜ʖ ͡°)");
+  }
+  if (leader_sequence_three_keys(KC_S, KC_S, KC_S)) {
+    send_unicode_string("¯\\_(ツ)_/¯");
+  }
+  // end typing functions
 }
 
 void matrix_init_user(void) {
@@ -370,138 +420,29 @@ void matrix_init_user(void) {
   set_os(current_os, false);
 }
 
-LEADER_EXTERNS();
-
 void matrix_scan_user(void) {
   check_state();
   flash_rgb();
   fade_rgb();
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
-
-    // begin OS functions
-    SEQ_TWO_KEYS(KC_P, KC_B) {
-      if (current_os == OS_WIN) {
-              SEND_STRING(SS_DOWN(X_LGUI) SS_TAP(X_PAUSE) SS_UP(X_LGUI));
-      } else {
-      }
-    }
-    SEQ_THREE_KEYS(KC_C, KC_A, KC_D) {
-      if (current_os == OS_WIN) {
-              SEND_STRING(SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_DELETE) SS_UP(X_LALT) SS_UP(X_LCTRL));
-      } else {
-      }
-    }
-    SEQ_FOUR_KEYS(KC_C, KC_A, KC_L, KC_C) {
-      if (current_os == OS_WIN) {
-        SEND_STRING(SS_TAP(X_CALCULATOR));
-      } else if (current_os == OS_MAC) {
-        SEND_STRING(SS_DOWN(X_LGUI) SS_TAP(X_SPACE) SS_UP(X_LGUI) "calculator" SS_TAP(X_ENTER));
-      }
-    }
-    // end OS functions
-
-    // begin format functions
-    SEQ_ONE_KEY(KC_B) {
-      surround_type(4, KC_8, true);
-    }
-    SEQ_ONE_KEY(KC_I) {
-      surround_type(2, KC_8, true);
-    }
-    SEQ_ONE_KEY(KC_U) {
-      surround_type(4, KC_MINS, true);
-    }
-    SEQ_ONE_KEY(KC_S) {
-      surround_type(4, KC_GRAVE, true);
-    }
-    SEQ_TWO_KEYS(KC_S, KC_S) {
-      if (current_os == OS_MAC) {
-        long_keystroke(3, (uint16_t[]){KC_LGUI, KC_LSFT, KC_4});
-      } else if (current_os == OS_WIN) {
-        long_keystroke(3, (uint16_t[]){KC_LGUI, KC_LSFT, KC_S});
-      } else {
-        return;
-      }
-    }
-    SEQ_ONE_KEY(KC_C) {
-      surround_type(2, KC_GRAVE, false);
-    }
-    SEQ_TWO_KEYS(KC_C, KC_C) {
-      surround_type(6, KC_GRAVE, false);
-    }
-    // end format functions
-
-    // start fancy functions
-    SEQ_THREE_KEYS(KC_C, KC_C, KC_C) {
-      surround_type(6, KC_GRAVE, false);
-      pri_mod(true);
-      tap_key(KC_V);
-      pri_mod(false);
-      tap_key(KC_RGHT);
-      tap_key(KC_RGHT);
-      tap_key(KC_RGHT);
-      tap_key(KC_ENTER);
-    }
-    // end fancy functions
-
-    // start typing functions
-    SEQ_TWO_KEYS(KC_T, KC_M) {
-      // ™
-      send_unicode_hex_string("2122");
-    }
-    SEQ_THREE_KEYS(KC_G, KC_G, KC_T) {
-      SEND_STRING("@GrahamGoldenTech.com");
-    }
-    SEQ_THREE_KEYS(KC_L, KC_O, KC_D) {
-      // ಠ__ಠ
-      send_unicode_hex_string("0CA0 005F 005F 0CA0");
-    }
-    SEQ_FOUR_KEYS(KC_R, KC_E, KC_P, KC_O) {
-      SEND_STRING("https://github.com/qmk/qmk_firmware/tree/master/users/arkag");
-    }
-    SEQ_FOUR_KEYS(KC_F, KC_L, KC_I, KC_P) {
-      // (╯‵Д′)╯彡┻━┻
-      send_unicode_hex_string("0028 256F 2035 0414 2032 0029 256F 5F61 253B 2501 253B");
-    }
-    SEQ_FIVE_KEYS(KC_U, KC_F, KC_L, KC_I, KC_P) {
-      // ┬─┬ノ( º _ º ノ)
-      send_unicode_hex_string("252C 2500 252C 30CE 0028 0020 00BA 0020 005F 0020 00BA 0020 30CE 0029");
-    }
-    SEQ_FIVE_KEYS(KC_L, KC_E, KC_N, KC_N, KC_Y) {
-      // ( ͡° ͜ʖ ͡°)
-      send_unicode_hex_string("0028 0020 0361 00B0 0020 035C 0296 0020 0361 00B0 0029");
-    }
-    SEQ_FIVE_KEYS(KC_S, KC_H, KC_R, KC_U, KC_G) {
-      // ¯\_(ツ)_/¯
-      send_unicode_hex_string("00AF 005C 005F 0028 30C4 0029 005F 002F 00AF");
-    }
-    // end typing functions
-
-  }
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-  case M_PMOD:
-    if (record->event.pressed) {
-      pri_mod(true);
-    } else {
-      pri_mod(false);
-    }
-    return false;
-
-  case M_SMOD:
-    if (record->event.pressed) {
-      sec_mod(true);
-    } else {
-      sec_mod(false);
-    }
-    return false;
+  #ifdef AUDIO_ENABLE
+        case M_USSR:
+            PLAY_SONG(song_ussr);
+            return false;
+  #endif
 
   case M_OS:
-    if (record->event.pressed) {
+    if (record->event.pressed){
       set_os((current_os+1) % _OS_COUNT, true);
+    }
+    return false;
+
+  case M_DASH:
+    if (record->event.pressed){
+      register_unicode(0x2014); // —
     }
     return false;
 
@@ -513,16 +454,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
   }
 }
-
-//Tap Dance Definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-  [TD_3_GRV_ACT]      = ACTION_TAP_DANCE_FN (dance_3),
-  [TD_C_CED]          = ACTION_TAP_DANCE_FN (dance_c),
-  [TD_GRV_3GRV]       = ACTION_TAP_DANCE_FN (dance_grv),
-  [TD_SING_DOUB]      = ACTION_TAP_DANCE_FN (dance_quot),
-  [TD_STRK_SHOT]      = ACTION_TAP_DANCE_FN (dance_strk),
-  [TD_HYPH_UNDR]      = ACTION_TAP_DANCE_DOUBLE (KC_MINS, LSFT(KC_MINS)),
-  [TD_BRCK_PARN_O]    = ACTION_TAP_DANCE_DOUBLE (KC_LBRC, LSFT(KC_9)),
-  [TD_BRCK_PARN_C]    = ACTION_TAP_DANCE_DOUBLE (KC_RBRC, LSFT(KC_0)),
-  [TD_LALT_RALT]      = ACTION_TAP_DANCE_DOUBLE (KC_LALT, KC_RALT),
-};

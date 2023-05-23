@@ -1,29 +1,15 @@
 #pragma once
 
-#include "quantum.h"
-#include "process_keycode/process_tap_dance.h"
+#include QMK_KEYBOARD_H
 
 #define EECONFIG_USERSPACE (uint8_t *)20
 
-#define LRALT       TD(TD_LALT_RALT)
-#define QUOTE       TD(TD_SING_DOUB)
-#define GRAVE       TD(TD_GRV_3GRV)
-#define OBRACK      TD(TD_BRCK_PARN_O)
-#define CBRACK      TD(TD_BRCK_PARN_C)
-#define THREE       TD(TD_3_GRV_ACT)
-#define STRIKE      TD(TD_STRK_SHOT)
-#define HYPHEN      TD(TD_HYPH_UNDR)
-#define CEDILLA     TD(TD_C_CED)
-
-#define RAISE       MO(1)
-#define LOWER       MO(2)
-#define KEEB        MO(3)
-#define MEDIA       MO(4)
-#define LAZY        MO(5)
-
-#define MOD_CTL_MASK (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RCTL))
-#define MOD_GUI_MASK (MOD_BIT(KC_LGUI) | MOD_BIT(KC_RGUI))
-#define MOD_SFT_MASK (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT))
+#define SYMBOL      MO(_SYMBOL)
+#define MEDIA       MO(_MEDIA)
+#define ARROW       MO(_ARROW)
+#define FUNCT       MO(_FUNCT)
+#define KEEB        MO(_KEEB)
+#define HITBOX      TT(_HITBOX)
 
 #define LED_FLASH_DELAY       150
 
@@ -33,13 +19,16 @@
 #define INACTIVE_DELAY        250
 #define SLEEP_DELAY           180000
 
+#define HUE_MAX               254
+
 enum {
   _QWERTY = 0,
-  _RAISE,
-  _LOWER,
-  _KEEB,
+  _SYMBOL,
   _MEDIA,
-  _LAZY,
+  _ARROW,
+  _FUNCT,
+  _KEEB,
+  _HITBOX,
 };
 
 typedef enum {
@@ -69,47 +58,16 @@ typedef enum {
 typedef enum {
   active = 0,
   inactive,
-  sleeping,
   boot,
 } activityState;
 
 enum custom_keycodes {
   M_PMOD = SAFE_RANGE,
   M_SMOD,
-  M_P_B,
-  M_C_A_D,
-  M_CALC,
   M_OS,
-  M_TF,
-  M_TM,
-  M_GGT,
-  M_LOD,
-  M_LENNY,
-  M_BOLD,
-  M_ITAL,
-  M_ULIN,
-  M_SNIPT,
-  M_REPO,
-  M_SHRUG,
-  M_UF,
+  M_DASH,
+  M_USSR,
 };
-
-enum tapdances {
-  TD_3_GRV_ACT = 0,
-  TD_C_CED,
-  TD_GRV_3GRV,
-  TD_SLSH_HTTP,
-  TD_SING_DOUB,
-  TD_HYPH_UNDR,
-  TD_STRK_SHOT,
-  TD_SPECIAL,
-  TD_BRCK_PARN_O,
-  TD_BRCK_PARN_C,
-  TD_LALT_RALT,
-  SPC_SFT_NSFT,
-};
-
-void send_unicode_hex_string(const char *str);
 
 void velocikey_accelerate(void);
 void velocikey_decelerate(void);
@@ -137,16 +95,11 @@ void pri_mod(bool press);
 
 void sec_mod(bool press);
 
+void meh_hyper(bool press);
+
+void multi_tap(uint8_t num_of_chars, uint16_t keycode, bool use_shift);
+
 void surround_type(uint8_t num_of_chars, uint16_t keycode, bool use_shift);
+void pair_surround_type(uint8_t num_of_chars, uint16_t keycode, bool use_shift);
 
 void long_keystroke(size_t num_of_keys, uint16_t keys[]);
-
-void dance_grv (qk_tap_dance_state_t *state, void *user_data);
-void dance_quot (qk_tap_dance_state_t *state, void *user_data);
-void dance_strk (qk_tap_dance_state_t *state, void *user_data);
-void dance_3 (qk_tap_dance_state_t *state, void *user_data);
-void dance_c (qk_tap_dance_state_t *state, void *user_data);
-
-int cur_dance (qk_tap_dance_state_t *state);
-void spc_finished (qk_tap_dance_state_t *state, void *user_data);
-void spc_reset (qk_tap_dance_state_t *state, void *user_data);
