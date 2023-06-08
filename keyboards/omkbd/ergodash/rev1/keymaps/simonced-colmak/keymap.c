@@ -5,10 +5,9 @@
 enum {
     LAYER_BASE = 0,
     LAYER_SYMB,
-    //LAYER_NUM,
-    LAYER_GAME,
+    LAYER_NUM,
+    LAYER_GAME
 };
-
 
 /*======================================================================*/
 /*define key combinaisions*/
@@ -16,10 +15,9 @@ enum {
 
 // == LAYERS RELATED ==
 
-// layer 1 (mometary)
 #define LAY0 TO(LAYER_BASE) // Go TO base layer
 #define LAY1 MO(LAYER_SYMB) // MOmemtary layer (non assigned keys are "transparent")
-//#define LAY2 TG(LAYER_NUM)  // ToGgle layer on/off (non assigned keys are "transparent")
+#define LAY2 TG(LAYER_NUM)  // ToGgle layer on/off (non assigned keys are "transparent")
 #define LAY3 TO(LAYER_GAME) // goes TO layer (all keys replaced)
 
 // == SHORTCUTS RELATED ==
@@ -74,17 +72,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * | Esc  |   A  |   R  |   S  |   T  |   D  |      |                    |      |   H  |   N  |   E  |   I  |   O  |  @   |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * | CAPS |   Z  |   X  |   C  |   V  |   B  | Alt  |                    | AltG |   N  |   M  |   ,  |   .  |   /  | PGUP |
+   * | CAPS |   Z  |   X  |   C  |   V  |   B  | Alt  |                    | AltG |   N  |   M  |   ,  |   .  |   /  |  \   |
    * |-------------+------+------+------+------+------+------.      ,------+------+------+------+------+------+-------------|
-   * | GUI  |  ALT |      | EISU |      | Shift| Ctrl | Space|      | Enter| Ctrl | Shift|      | QUERT|      |      | PGDN |
+   * | GUI  |  ALT |      |      |      |      | Ctrl | Space|      | Enter| Ctrl | Shift|      |      |      |      |      |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_BASE] = LAYOUT( \
-    EISU ,   JP_1, JP_2,  JP_3, JP_4, JP_5,  JP_MINS,                         JP_CIRC, JP_6, JP_7, JP_8,    JP_9,    JP_0,    KC_BSPC, \
-    KC_TAB , KC_Q, KC_W,  KC_F, KC_P, KC_G,  JP_LBRC,                         JP_RBRC, KC_J, KC_L, KC_U,    KC_Y,    JP_SCLN, JP_COLN, \
-    CTR_ESC, KC_A, KC_R,  KC_S, KC_T, KC_D,  KC_DEL,                          KC_BSPC, KC_H, KC_N, KC_E,    KC_I,    KC_O,    JP_AT,   \
-    SFT_CAP, KC_Z, KC_X,  KC_C, KC_V, KC_B,  KC_LALT,                         KC_ALGR, KC_K, KC_M, JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
-    KC_LGUI, LAY3, KC_NO, LAY1,     KC_LSFT, KC_LCTL, KC_SPC,          KC_ENT, KC_RCTL, KC_RSFT,       KC_MNXT, KC_MPLY, KC_VOLD, KC_VOLU  \
+    EISU ,   JP_1,   JP_2, JP_3, JP_4, JP_5,  JP_MINS,                         JP_CIRC, JP_6, JP_7, JP_8,    JP_9,    JP_0,    KC_BSPC, \
+    KC_TAB , KC_Q,   KC_W, KC_F, KC_P, KC_G,  JP_LBRC,                         JP_RBRC, KC_J, KC_L, KC_U,    KC_Y,    JP_SCLN, JP_COLN, \
+    CTR_ESC, KC_A,   KC_R, KC_S, KC_T, KC_D,  KC_DEL,                          KC_BSPC, KC_H, KC_N, KC_E,    KC_I,    KC_O,    JP_AT,   \
+    SFT_CAP, KC_Z,   KC_X, KC_C, KC_V, KC_B,  KC_LALT,                         KC_ALGR, KC_K, KC_M, JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
+    KC_LGUI, KC_LALT, LAY3, LAY2,      LAY1,  KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,    KC_MNXT, KC_MPLY, KC_VOLD, KC_VOLU  \
   ),
 
   /*
@@ -109,7 +107,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          KC_PSCR, KC_INS,   _______, KC_PGDN  \
   ),
 
-  /* Gaming layer
+  /*
+   * Numbers
+   * ,------------------------------------------------.                    ,------------------------------------------------.
+   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |      |      |      |  /   |  *   |  -   |      |
+   * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |                    |      |      |  7   |  8   |  9   |  +   |      |
+   * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |                    |      |      |  4   |  5   |  6   |  +   |      |
+   * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |      |      |      |      |      |  1   |  2   |  3   | ent  |      |
+   * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
+   * |      |      |      |      |      |      |      |      |      |      |      |      |      |  0   |  .   | ent  |      |
+   * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
+   */
+  [LAYER_NUM] = LAYOUT(
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_NUM, KC_PSLS, KC_PAST, KC_PMNS, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_P7,    KC_P8,   KC_P9, KC_PPLS, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_P4,    KC_P5,   KC_P6, KC_PPLS, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_P1,    KC_P2,   KC_P3, KC_PENT, _______, \
+    _______, _______, _______, LAY0,             _______, _______,_______,          _______,_______, _______,           KC_P0, KC_PDOT, KC_PENT, _______  \
+  ),
+
+
+  /* Gaming layer TODO comment with keys
    * Same as querty but with the following differences
    *  - no windows key
    *  - arrow keys at the very right-bottom
@@ -131,7 +152,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB , KC_Q,  KC_W,  KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y,  KC_U,  KC_I,    KC_O,    KC_P,    JP_AT,   \
     KC_LCTL, KC_A,  KC_S,  KC_D, KC_F,  KC_G,    KC_DEL,                          KC_BSPC, KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, JP_COLN, \
     KC_LSFT, KC_Z,  KC_X,  KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N,  KC_M,  JP_COMM, JP_DOT,  KC_UP,   JP_SLSH, \
-    KC_LALT, KC_NO, KC_NO, LAY0,       KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_NO,        KC_NO,   KC_LEFT, KC_DOWN, KC_RIGHT \
+    KC_NO, KC_LALT, LAY0, KC_NO,       KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_NO,        KC_NO,   KC_LEFT, KC_DOWN, KC_RIGHT \
   ),
 };
 
