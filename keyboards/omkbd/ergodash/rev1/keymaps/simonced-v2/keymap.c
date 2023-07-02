@@ -15,10 +15,11 @@ enum {
 
 // == LAYERS RELATED ==
 
-#define LAY0 TO(LAYER_BASE) // Go TO base layer
-#define LAY1 MO(LAYER_SYMB) // MOmemtary layer (non assigned keys are "transparent")
-#define LAY2 TG(LAYER_NUM)  // ToGgle layer on/off (non assigned keys are "transparent")
-#define LAY3 TO(LAYER_GAME) // goes TO layer (all keys replaced)
+#define LAY0 TO(LAYER_BASE) // Go [TO] base layer
+#define LAY1 MO(LAYER_SYMB) // [MO]memtary layer (non assigned keys are "transparent")
+#define LAY2 TG(LAYER_NUM)  // [T]o[G]gle layer on/off (non assigned keys are "transparent")
+#define LAY3 TO(LAYER_GAME) // Go [TO] layer (all keys replaced)
+#define F_FUN LT(LAYER_SYMB, KC_F)
 
 // == SHORTCUTS RELATED ==
 
@@ -64,39 +65,39 @@ enum {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /*
-   * COLEMAK (JIS) by default
+   * QWERTY (JIS) by default
    * ,------------------------------------------------.                    ,------------------------------------------------.
    * | 英数 |   1  |   2  |   3  |   4  |   5  |   -  |                    |   ^  |   6  |   7  |   8  |   9  |   0  | BSPC |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * | Tab  |   Q  |   W  |   F  |   P  |   G  |   [  |                    |   ]  |   J  |   L  |   U  |   Y  |   ;  |  :   |
+   * | Tab  |   Q  |   W  |   E  |   R  |   T  |   [  |                    |   ]  |   Y  |   U  |   I  |   O  |   P  |  @   |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * | Esc  |   A  |   R  |   S  |   T  |   D  |      |                    |      |   H  |   N  |   E  |   I  |   O  |  @   |
+   * | Esc  |   A  |   S  |   D  |   F  |   G  | DEL  |                    | BSPC |   H  |   J  |   K  |   L  |   ;  |  :   |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * | CAPS |   Z  |   X  |   C  |   V  |   B  | Alt  |                    | AltG |   N  |   M  |   ,  |   .  |   /  |  \   |
    * |-------------+------+------+------+------+------+------.      ,------+------+------+------+------+------+-------------|
-   * | GUI  |  ALT |      |      |      |      | Ctrl | Space|      | Enter| Ctrl | Shift|      |      |      |      |      |
+   * | GUI  |  ALT |      |      |      | Shift| Ctrl | Space|      | Enter| Ctrl | Shift|      |      |      |      |      |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_BASE] = LAYOUT( \
-    EISU ,   JP_1,   JP_2, JP_3, JP_4, JP_5,  JP_MINS,                         JP_CIRC, JP_6, JP_7, JP_8,    JP_9,    JP_0,    KC_BSPC, \
-    KC_TAB , KC_Q,   KC_W, KC_F, KC_P, KC_G,  JP_LBRC,                         JP_RBRC, KC_J, KC_L, KC_U,    KC_Y,    JP_SCLN, JP_COLN, \
-    CTR_ESC, KC_A,   KC_R, KC_S, KC_T, KC_D,  KC_DEL,                          KC_BSPC, KC_H, KC_N, KC_E,    KC_I,    KC_O,    JP_AT,   \
-    SFT_CAP, KC_Z,   KC_X, KC_C, KC_V, KC_B,  KC_LALT,                         KC_ALGR, KC_K, KC_M, JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
-    KC_LGUI, KC_LALT, LAY3, LAY2,      LAY1,  KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,    KC_MNXT, KC_MPLY, KC_VOLD, KC_VOLU  \
+    EISU ,   JP_1,   JP_2, JP_3, JP_4,  JP_5,    JP_MINS,                         JP_CIRC, JP_6, JP_7, JP_8,    JP_9,    JP_0,    KC_BSPC, \
+    KC_TAB , KC_Q,   KC_W, KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y, KC_U, KC_I,    KC_O,    KC_P,    JP_AT,   \
+    CTR_ESC, KC_A,   KC_S, KC_D, F_FUN, KC_G,    KC_DEL,                          KC_BSPC, KC_H, KC_J, KC_K,    KC_L,    JP_SCLN, JP_COLN, \
+    SFT_CAP, KC_Z,   KC_X, KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N, KC_M, JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
+    KC_LGUI, KC_LALT, LAY3, LAY2,      KC_LSFT,  KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,    KC_MNXT, KC_MPLY, KC_VOLD, KC_VOLU  \
   ),
 
   /*
    * Motion +Symbols layer
    * ,------------------------------------------------.                    ,------------------------------------------------.
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |  F12 |  F6  |  F7  |  F8  |  F9  |  F10 |      |
+   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |  F12 |  F6  |  F7  |  F8  |  F9  |  F10 | home |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |  !   |  "   |  #   |  $   |  %   |      |                    |      |  &   |  '   |  (   |  )   |  |   |      |
+   * |      |  !   |  "   |  #   |  $   |  %   |      |                    |      |  &   |  '   |  (   |  )   |  |   | end  |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |                    |      | LEFT | DOWN |  UP  | RGHT |      |      |
    * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |      |      |      |      |      |  {   |  }   |  [   |  ]   |      |
+   * |      |      |      |      |      |      |      |      |      |      |      |      |  {   |  }   |  [   |  ]   | pgup |
    * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
-   * |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |
+   * |      |      |      |      |      |      |      |      |      |      |      |      |      | pscr |  ins |      | pgdn |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_SYMB] = LAYOUT(
