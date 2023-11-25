@@ -5,6 +5,7 @@
 enum {
     LAYER_BASE = 0,
     LAYER_SYMB,
+    LAYER_SEL,
     LAYER_NUM,
     LAYER_GAME
 };
@@ -19,6 +20,7 @@ enum {
 #define LAY1 MO(LAYER_SYMB) // [MO]memtary layer (non assigned keys are "transparent")
 #define LAY2 TG(LAYER_NUM)  // [T]o[G]gle layer on/off (non assigned keys are "transparent")
 #define LAY3 TO(LAYER_GAME) // Go [TO] layer (all keys replaced)
+#define V_SEL LT(LAYER_SEL, KC_V) // text selection switch
 #define F_FUN LT(LAYER_SYMB, KC_F) // K aslo as symbol layer temporary switch
 #define J_FUN LT(LAYER_SYMB, KC_J) // J aslo as symbol layer temporary switch
 
@@ -33,8 +35,8 @@ enum {
 #define SFT_CAP MT(MOD_LSFT, KC_CAPS)
 
 // changing virtual desktop (only left and right)
-#define DESK_R G(C(KC_RIGHT))
-#define DESK_L G(C(KC_LEFT))
+#define DESK_R A(C(KC_RIGHT))
+#define DESK_L A(C(KC_LEFT))
 
 /*
 // moving windows in screen(s) (4 directions)
@@ -48,6 +50,7 @@ enum {
 #define WIN_RL G(KC_LEFT)
 #define WIN_RU G(KC_UP)
 #define WIN_RD G(KC_DOWN)
+*/
 
 // text selection (for _SE layer)
 #define SEL_L S(KC_LEFT)
@@ -56,7 +59,7 @@ enum {
 #define SEL_R S(KC_RIGHT)
 #define SEL_H S(KC_HOME)
 #define SEL_E S(KC_END)
-*/
+
 
 
 /*======================================================================*/
@@ -83,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     EISU ,   JP_1,   JP_2, JP_3, JP_4,  JP_5,    JP_MINS,                         JP_CIRC, JP_6, JP_7,  JP_8,    JP_9,    JP_0,    KC_BSPC, \
     KC_TAB , KC_Q,   KC_W, KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y, KC_U,  KC_I,    KC_O,    KC_P,    JP_AT,   \
     CTR_ESC, KC_A,   KC_S, KC_D, F_FUN, KC_G,    KC_DEL,                          KC_BSPC, KC_H, J_FUN, KC_K,    KC_L,    JP_SCLN, JP_COLN, \
-    SFT_CAP, KC_Z,   KC_X, KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N, KC_M,  JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
+    SFT_CAP, KC_Z,   KC_X, KC_C, V_SEL, KC_B,    KC_LALT,                         KC_ALGR, KC_N, KC_M,  JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
     KC_LGUI, KC_LALT, LAY3, LAY2,      KC_LSFT,  KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,     KC_MNXT, KC_MPLY, KC_VOLD, KC_VOLU  \
   ),
 
@@ -94,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * |      |  !   |  "   |  #   |  $   |  %   |      |                    |      |  &   |  '   |  (   |  )   |  |   | end  |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |                    |      | LEFT | DOWN |  UP  | RGHT |  _   |      |
+   * |      |      | DESL | DESR |      |      |      |                    |      | LEFT | DOWN |  UP  | RGHT |  _   |      |
    * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      |      |      |  {   |  }   |  [   |  ]   | pgup |
    * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
@@ -104,15 +107,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_SYMB] = LAYOUT( \
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,    KC_F11,                           KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_HOME, \
     _______, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR, JP_PERC,  _______,                          _______, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN,  JP_PIPE, KC_END,  \
-    _______, _______, _______, _______, _______, _______, _______,                          _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, JP_UNDS, _______, \
+    _______, _______, DESK_L,  DESK_R,  _______, _______, _______,                          _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, JP_UNDS, _______, \
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, JP_LCBR, JP_RCBR, JP_LBRC,  JP_RBRC, KC_PGUP, \
     _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          KC_PSCR, KC_INS,   _______, KC_PGDN  \
+  ),
+
+  // Selection layer (will help when selecting text)
+  [LAYER_SEL] = LAYOUT( \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______,   SEL_L,   SEL_D,   SEL_U,   SEL_R, _______, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______,   SEL_H,   SEL_E, _______, _______, _______, \
+    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, _______, _______, _______  \
   ),
 
   /*
    * Numbers
    * ,------------------------------------------------.                    ,------------------------------------------------.
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |      |      |      |  /   |  *   |  -   |      |
+   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |      |      | NmLk |  /   |  *   |  -   |      |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |                    |      |      |  7   |  8   |  9   |  +   |      |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
