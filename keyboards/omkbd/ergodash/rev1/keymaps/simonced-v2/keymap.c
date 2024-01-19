@@ -93,11 +93,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Motion +Symbols layer (overlay, so un-modified keys are from the base layer)
    * ,------------------------------------------------.                    ,------------------------------------------------.
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |  F12 |  F6  |  F7  |  F8  |  F9  |  F10 | home |
+   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | home |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |  !   |  "   |  #   |  $   |  %   |      |                    |      |  &   |  '   |  (   |  )   |  |   | end  |
+   * |      |  !   |  "   |  #   |  $   |  %   |   &  |                    |   '  |  (  |  )   |       |  =   |  ~   | end  |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |      | DESL | DESR |      |      |      |                    |      | LEFT | DOWN |  UP  | RGHT |  _   |      |
+   * |      |      | DESL | DESR |      |      |      |                    |      | LEFT | DOWN |  UP  | RGHT |  _   |   |  |
    * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      |      |      |  {   |  }   |  [   |  ]   | pgup |
    * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
@@ -105,9 +105,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_SYMB] = LAYOUT( \
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,    KC_F11,                           KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_HOME, \
-    _______, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR, JP_PERC,  _______,                          _______, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN,  JP_PIPE, KC_END,  \
-    _______, _______, DESK_L,  DESK_R,  _______, _______, _______,                          _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, JP_UNDS, _______, \
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,    KC_F6,                            KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,  KC_HOME, \
+    _______, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR, JP_PERC,  JP_AMPR,                          JP_QUOT, JP_LPRN, JP_RPRN, _______, JP_MINS, JP_CIRC,  KC_END,  \
+    _______, _______, DESK_L,  DESK_R,  _______, _______, _______,                          _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, JP_UNDS, JP_PIPE, \
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, JP_LCBR, JP_RCBR, JP_LBRC,  JP_RBRC, KC_PGUP, \
     _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          KC_PSCR, KC_INS,   _______, KC_PGDN  \
   ),
