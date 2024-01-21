@@ -20,9 +20,10 @@ enum {
 #define LAY1 MO(LAYER_SYMB) // [MO]memtary layer (non assigned keys are "transparent")
 #define LAY2 TG(LAYER_NUM)  // [T]o[G]gle layer on/off (non assigned keys are "transparent")
 #define LAY3 TO(LAYER_GAME) // Go [TO] layer (all keys replaced)
-#define V_SEL LT(LAYER_SEL, KC_V) // text selection switch
-#define F_FUN LT(LAYER_SYMB, KC_F) // K aslo as symbol layer temporary switch
+#define F_FUN LT(LAYER_SYMB, KC_F) // F aslo as symbol layer temporary switch
 #define J_FUN LT(LAYER_SYMB, KC_J) // J aslo as symbol layer temporary switch
+#define V_SEL LT(LAYER_SEL, KC_V) // text selection switch
+#define ENT_FUN LT(LAYER_SYMB, KC_ENT) // Enter + functiion/motion layer (from gaming layer)
 
 // == SHORTCUTS RELATED ==
 
@@ -124,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Numbers
    * ,------------------------------------------------.                    ,------------------------------------------------.
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |      |      | NmLk |  /   |  *   |  -   |      |
+   * |      |      |      |      |      |      |      |                    |      |      | NmLk |  /   |  *   |  -   |      |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |                    |      |      |  7   |  8   |  9   |  +   |      |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
@@ -156,9 +157,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |                    |      |      |      |      |      |      |      |
    * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |  UP  |      |
-   * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
-   * |      |      |      |  L0  |      |      |      |      |      |      |      |      |      |      |  LFT |  DWN | RGHT |
+   * |      |      |      |      |      |      |      |      |      |  ENT |      |      |      |      |      |  UP  |      |
+   * |-------------+------+------+------+------+------|      |      |   +  |------+------+------+------+------+-------------|
+   * |      |      |      |  L0  |      |      |      |      |      |  FUN |      |      |      |      |  LFT |  DWN | RGHT |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_GAME] = LAYOUT( \
@@ -166,7 +167,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB , KC_Q,  KC_W,  KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y,  KC_U,  KC_I,    KC_O,    KC_P,    JP_AT,   \
     KC_LCTL, KC_A,  KC_S,  KC_D, KC_F,  KC_G,    KC_DEL,                          KC_BSPC, KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, JP_COLN, \
     KC_LSFT, KC_Z,  KC_X,  KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N,  KC_M,  JP_COMM, JP_DOT,  KC_UP,   JP_SLSH, \
-    KC_NO, KC_LALT, KC_NO, LAY0,        KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,      KC_NO,   KC_LEFT, KC_DOWN, KC_RIGHT \
+    KC_NO, KC_LALT, KC_NO, LAY0,        KC_LSFT, KC_LCTL, KC_SPC,        ENT_FUN, KC_RCTL, KC_RSFT,      KC_NO,   KC_LEFT, KC_DOWN, KC_RIGHT \
   ),
 };
 
