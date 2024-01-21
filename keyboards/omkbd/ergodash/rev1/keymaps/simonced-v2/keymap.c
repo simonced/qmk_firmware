@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * QWERTY (JIS) by default
    * ,------------------------------------------------.                    ,------------------------------------------------.
-   * | 英数 |   1  |   2  |   3  |   4  |   5  |   6  |                    |   7  |   8  |   9  |   0  |   -  |   ^  | BSPC |
+   * | 英数 |   1  |   2  |   3  |   4  |   5  |   -  |                    |   ^  |   6  |   7  |   8  |   9  |   0  | BSPC |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * | Tab  |   Q  |   W  |   E  |   R  |   T  |   [  |                    |   ]  |   Y  |   U  |   I  |   O  |   P  |  @   |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
@@ -79,11 +79,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * | CAPS |   Z  |   X  |   C  |   V  |   B  | Alt  |                    | AltG |   N  |   M  |   ,  |   .  |   /  |  \   |
    * |-------------+------+------+------+------+------+------.      ,------+------+------+------+------+------+-------------|
-   * | GUI  |  ALT |      |      |      | Shift| Ctrl | Space|      | Enter| Ctrl | Shift|      |   <  |   v  |   ^  |  >   |
+   * | GUI  |  ALT |  L3  |  L2  |      | Shift| Ctrl | Space|      | Enter| Ctrl | Shift|      |   <  |   v  |   ^  |  >   |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_BASE] = LAYOUT( \
-    EISU ,   JP_1,   JP_2, JP_3, JP_4,  JP_5,    JP_6,                            JP_7,    JP_8, JP_9,  JP_0,    JP_MINS, JP_CIRC, KC_BSPC, \
+    EISU ,   JP_1,   JP_2, JP_3, JP_4,  JP_5,    JP_MINS,                         JP_CIRC, JP_6, JP_7,  JP_8,    JP_9,    JP_0,    KC_BSPC, \
     KC_TAB , KC_Q,   KC_W, KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y, KC_U,  KC_I,    KC_O,    KC_P,    JP_AT,   \
     CTR_ESC, KC_A,   KC_S, KC_D, F_FUN, KC_G,    KC_DEL,                          KC_BSPC, KC_H, J_FUN, KC_K,    KC_L,    JP_SCLN, JP_COLN, \
     SFT_CAP, KC_Z,   KC_X, KC_C, V_SEL, KC_B,    KC_LALT,                         KC_ALGR, KC_N, KC_M,  JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
@@ -93,23 +93,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Motion +Symbols layer (overlay, so un-modified keys are from the base layer)
    * ,------------------------------------------------.                    ,------------------------------------------------.
-   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | home |
+   * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |  F12 |  F6  |  F7  |  F8  |  F9  |  F10 | home |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |  !   |  "   |  #   |  $   |  %   |   &  |                    |   '  |  (  |  )   |       |  =   |  ~   | end  |
+   * |      |  !   |  "   |  #   |  $   |  %   |      |                    |      |  &   |  '   |  (   |  )   |  |   | end  |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |      | DESL | DESR |      |      |      |                    |      | LEFT | DOWN |  UP  | RGHT |  _   |   |  |
-   * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
+   * |      |      | DESL | DESR |      |      |      |                    |      | LEFT | DOWN |  UP  | RGHT |  _   |   -  |
+   * |------+------+------+------+------+------+------+------.      ,------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      |      |      |  {   |  }   |  [   |  ]   | pgup |
    * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
-   * |      |      |      |      |      |      |      |      |      |      |      |      |      | pscr |  ins |      | pgdn |
+   * |      |      |      |      |      |      |      |      |      |      |      |      |      | pscr |  ins |  =   | pgdn |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_SYMB] = LAYOUT( \
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,    KC_F6,                            KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,  KC_HOME, \
-    _______, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR, JP_PERC,  JP_AMPR,                          JP_QUOT, JP_LPRN, JP_RPRN, _______, JP_MINS, JP_CIRC,  KC_END,  \
-    _______, _______, DESK_L,  DESK_R,  _______, _______, _______,                          _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, JP_UNDS, JP_PIPE, \
+    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,  KC_F5,    KC_F11,                           KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_HOME, \
+    _______, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR, JP_PERC,  KC_NO,                            KC_NO,   JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN,  JP_PIPE, KC_END,  \
+    _______, _______, DESK_L,  DESK_R,  _______, _______, KC_NO,                            KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, JP_UNDS, JP_MINS, \
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, JP_LCBR, JP_RCBR, JP_LBRC,  JP_RBRC, KC_PGUP, \
-    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          KC_PSCR, KC_INS,   _______, KC_PGDN  \
+    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          KC_PSCR, KC_INS,   JP_EQL,  KC_PGDN  \
   ),
 
   // Selection layer (will help when selecting text)
