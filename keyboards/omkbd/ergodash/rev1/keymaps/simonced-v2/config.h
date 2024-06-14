@@ -26,3 +26,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MASTER_RIGHT
 // #define EE_HANDS
 
+// override tapping term (default: 120 in keyboards/omkbd/ergodash/rev1/keyboard.json)
+#undef TAPPING_TERM
+#define TAPPING_TERM 150
