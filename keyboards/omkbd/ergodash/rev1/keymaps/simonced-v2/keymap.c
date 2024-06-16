@@ -4,10 +4,10 @@
 // definition of the layers
 enum {
   LAYER_BASE = 0,
+  LAYER_GAME,
   LAYER_SYMB,
   LAYER_SEL,
   LAYER_NUM,
-  LAYER_GAME,
   LAYER_SYMB2
 };
 
@@ -16,14 +16,23 @@ enum {
 /*======================================================================*/
 
 // == LAYERS RELATED ==
+// TO fully change layer
+// TG toggle a layer "on top"
+// MO momentary toggle (as long as key pressed)
+// LT momentary toggle (like MO, but usable as specified key press)
 
-#define LAY0 TO(LAYER_BASE) // Go [TO] base layer
-#define LAY1 MO(LAYER_SYMB) // [MO]memtary layer (non assigned keys are "transparent")
-#define LAY2 TG(LAYER_NUM)  // [T]o[G]gle layer on/off (non assigned keys are "transparent")
-#define LAY3 TO(LAYER_GAME) // Go [TO] layer (all keys replaced)
+#define TO_L0 TO(LAYER_BASE)
+// #define TG_SY TG(LAYER_SYMB)
+#define MO_NU MO(LAYER_NUM)
+#define TO_GM TO(LAYER_GAME)
+
+// active some layers from home row
 #define F_FUN LT(LAYER_SYMB, KC_F) // F aslo as symbol layer temporary switch
 #define J_FUN LT(LAYER_SYMB, KC_J) // J aslo as symbol layer temporary switch
 #define V_SEL LT(LAYER_SEL, KC_V) // text selection switch
+#define MO_L2 MO(LAYER_NUM) // [MO]mentary layer Numbers + Music controls
+
+// activate some layers from gaming layer
 #define ENT_FUN LT(LAYER_SYMB2, KC_ENT) // Enter + functiion/motion layer (from gaming layer)
 
 // == SHORTCUTS RELATED ==
@@ -106,7 +115,7 @@ tap_dance_action_t tap_dance_actions[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /*
-   * QWERTY (JIS) by default
+   * LAYER0: QWERTY (JIS) by default
    * ,------------------------------------------------.                    ,------------------------------------------------.
    * | 英数 |   1  |   2  |   3  |   4  |   5  |   -  |                    |   ^  |   6  |   7  |   8  |   9  |   0  | BSPC |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
@@ -124,11 +133,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB , KC_Q,   KC_W, KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y, KC_U,  KC_I,    KC_O,    KC_P,    JP_AT,   \
     CTR_ESC, KC_A,   KC_S, KC_D, F_FUN, KC_G,    KC_DEL,                          KC_BSPC, KC_H, J_FUN, KC_K,    KC_L,    JP_SCLN, JP_COLN, \
     SFT_CAP, KC_Z,   KC_X, KC_C, V_SEL, KC_B,    KC_LALT,                         KC_ALGR, KC_N, KC_M,  JP_COMM, JP_DOT,  JP_SLSH, JP_BSLS, \
-    KC_LGUI, KC_LALT, LAY3, LAY2,      KC_LSFT,  KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,     KC_LEFT, KC_DOWN,   KC_UP, KC_RIGHT \
+    KC_LGUI, KC_LALT, TO_GM, MO_NU,      KC_LSFT,  KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,     KC_LEFT, KC_DOWN,   KC_UP, KC_RIGHT \
   ),
 
   /*
-   * Motion +Symbols layer (overlay, so un-modified keys are from the base layer)
+   * LAYER1: Motion +Symbols layer (overlay, so un-modified keys are from the base layer)
    * ,------------------------------------------------.                    ,------------------------------------------------.
    * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F11 |                    |  F12 |  F6  |  F7  |  F8  |  F9  |  F10 | home |
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
@@ -158,29 +167,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, _______, _______, _______  \
   ),
 
-  /*
-   * Numbers + Media
-   * ,------------------------------------------------.                    ,------------------------------------------------.
-   * |      |      |      |      |      |      |      |                    |      |      | NmLk |  /   |  *   |  -   |      |
-   * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |                    |      |      |  7   |  8   |  9   |  +   |      |
-   * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
-   * |      |      |      |      |      | Vol+ |      |                    |      |      |  4   |  5   |  6   |  +   |      |
-   * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
-   * |      |      | Prev | Play | Next | Vol- |      |      |      |      |      |      |  1   |  2   |  3   | ent  |      |
-   * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
-   * | LAY0 |      |      |      |      |      |      |      |      |      |      |      |      |  0   |  .   | ent  |      |
-   * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
-   */
-  [LAYER_NUM] = LAYOUT( \
-    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_NUM, KC_PSLS, KC_PAST, KC_PMNS, _______, \
-    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_P7,    KC_P8,   KC_P9, KC_PPLS, _______, \
-    _______, _______, _______, _______, _______, KC_VOLU, _______,                          _______, _______, KC_P4,    KC_P5,   KC_P6, KC_PPLS, _______, \
-    _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD, _______,                          _______, _______, KC_P1,    KC_P2,   KC_P3, KC_PENT, _______, \
-    RST_N,   _______, _______, _______,          _______, _______,_______,          _______,_______, _______,           KC_P0, KC_PDOT, KC_PENT, _______  \
-  ),
-
-
   /* Gaming layer TODO comment with keys
    * Same as querty but with the following differences
    *  - no windows key
@@ -195,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |  ENT |      |      |      |      |      |  UP  |      |
    * |-------------+------+------+------+------+------|      |      |   +  |------+------+------+------+------+-------------|
-   * | LAY0 |      |      |      |      |      |      |      |      |  FUN |      |      |      |      |  LFT |  DWN | RGHT |
+   * | TO_L0 |      |      |      |      |      |      |      |      |  FUN |      |      |      |      |  LFT |  DWN | RGHT |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_GAME] = LAYOUT( \
@@ -203,7 +189,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB , KC_Q,  KC_W,  KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y,  KC_U,  KC_I,    KC_O,    KC_P,    JP_AT,   \
     KC_LCTL, KC_A,  KC_S,  KC_D, KC_F,  KC_G,    KC_DEL,                          KC_BSPC, KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, JP_COLN, \
     KC_LSFT, KC_Z,  KC_X,  KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N,  KC_M,  JP_COMM, JP_DOT,  KC_UP,   JP_SLSH, \
-    RST_G, KC_LALT, KC_NO, KC_NO,       KC_LSFT, KC_LCTL, KC_SPC,        ENT_FUN, KC_RCTL, KC_RSFT,      KC_NO,   KC_LEFT, KC_DOWN, KC_RIGHT \
+    RST_G, KC_LALT, KC_NO, _______,     KC_LSFT, KC_LCTL, KC_SPC,        ENT_FUN, KC_RCTL, KC_RSFT,      KC_NO,   KC_LEFT, KC_DOWN, KC_RIGHT \
+  ),
+
+  /*
+   * LAYER2: Numbers + Media
+   * ,------------------------------------------------.                    ,------------------------------------------------.
+   * |      |      |      |      |      |      |      |                    |      |      | NmLk |  /   |  *   |  -   |      |
+   * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
+   * |      |      |      |      |      |      |      |                    |      |      |  7   |  8   |  9   |  +   |      |
+   * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
+   * |      |      |      |      |      | Vol+ |      |                    |      |      |  4   |  5   |  6   |  +   |      |
+   * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
+   * |      |      | Prev | Play | Next | Vol- |      |      |      |      |      |      |  1   |  2   |  3   | ent  |      |
+   * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
+   * | TO_L0 |      |      |      |      |      |      |      |      |      |      |      |      |  0   |  .   | ent  |      |
+   * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
+   */
+  [LAYER_NUM] = LAYOUT( \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_NUM, KC_PSLS, KC_PAST, KC_PMNS, _______, \
+    _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_P7,    KC_P8,   KC_P9, KC_PPLS, _______, \
+    _______, _______, _______, _______, _______, KC_VOLU, _______,                          _______, _______, KC_P4,    KC_P5,   KC_P6, KC_PPLS, _______, \
+    _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD, _______,                          _______, _______, KC_P1,    KC_P2,   KC_P3, KC_PENT, _______, \
+    RST_N,   _______, _______, _______,          _______, _______,_______,          _______,_______, _______,           KC_P0, KC_PDOT, KC_PENT, _______  \
   ),
 
   /*
