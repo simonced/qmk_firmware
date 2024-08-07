@@ -23,14 +23,13 @@ enum {
 
 #define TO_L0 TO(LAYER_BASE)
 // #define TG_SY TG(LAYER_SYMB)
-#define MO_NU MO(LAYER_NUM)
+#define MO_NU MO(LAYER_NUM) // [MO]mentary layer Numbers + Music controls
 #define TO_GM TO(LAYER_GAME)
 
 // active some layers from home row
 #define F_FUN LT(LAYER_SYMB, KC_F) // F aslo as symbol layer temporary switch
 #define J_FUN LT(LAYER_SYMB, KC_J) // J aslo as symbol layer temporary switch
 #define V_SEL LT(LAYER_SEL, KC_V) // text selection switch
-#define MO_L2 MO(LAYER_NUM) // [MO]mentary layer Numbers + Music controls
 
 // activate some layers from gaming layer
 #define F_KEYS MO(LAYER_SYMB2)
@@ -105,8 +104,8 @@ tap_dance_action_t tap_dance_actions[] = {
   [TD_RST_GAME] = ACTION_TAP_DANCE_FN(dance_rst_game),
 };
 
-#define RST_N TD(TD_RST_NUM)
-#define RST_G TD(TD_RST_GAME)
+#define RST_N TD(TD_RST_NUM) // assigned but unused, since num layer is only momentary
+// #define RST_G TD(TD_RST_GAME)
 
 /*======================================================================*/
 /*layouts*/
@@ -179,9 +178,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------|                    |------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |                    |      |      |      |      |      |      |      |
    * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
-   * |      |      |      |      |      |      |      |      |      |  ENT |      |      |      |      |      |  UP  |      |
-   * |-------------+------+------+------+------+------|      |      |   +  |------+------+------+------+------+-------------|
-   * | TO_L0 |      |      |      |      |      |      |      |      |  FUN |      |      |      |      |  LFT |  DWN | RGHT |
+   * |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |  UP  |      |
+   * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
+   * |       |      |      |      |     |      |      |      |      |      |      |      |      |  FUN |  LFT |  DWN | RGHT |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_GAME] = LAYOUT( \
@@ -189,7 +188,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB , KC_Q,  KC_W,  KC_E, KC_R,  KC_T,    JP_LBRC,                         JP_RBRC, KC_Y,  KC_U,  KC_I,    KC_O,    KC_P,    JP_AT,   \
     KC_LCTL, KC_A,  KC_S,  KC_D, KC_F,  KC_G,    KC_DEL,                          KC_BSPC, KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, JP_COLN, \
     KC_LSFT, KC_Z,  KC_X,  KC_C, KC_V,  KC_B,    KC_LALT,                         KC_ALGR, KC_N,  KC_M,  JP_COMM, JP_DOT,  KC_UP,   JP_SLSH, \
-    RST_G, KC_LALT, KC_NO, _______,     KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,      F_KEYS,  KC_LEFT, KC_DOWN, KC_RIGHT \
+    KC_NO, KC_LALT, KC_NO, _______,     KC_LSFT, KC_LCTL, KC_SPC,         KC_ENT, KC_RCTL, KC_RSFT,      F_KEYS,  KC_LEFT, KC_DOWN, KC_RIGHT \
   ),
 
   /*
@@ -203,7 +202,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------+------,      ,------+------+------+------+------+------+------+------|
    * |      |      | Prev | Play | Next | Vol- |      |      |      |      |      |      |  1   |  2   |  3   | ent  |      |
    * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
-   * | TO_L0 |      |      |      |      |      |      |      |      |      |      |      |      |  0   |  .   | ent  |      |
+   * |      |      |      |      |      |      |      |      |      |      |      |      |      |  0   |  .   | ent  |      |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_NUM] = LAYOUT( \
@@ -211,7 +210,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, KC_P7,    KC_P8,   KC_P9, KC_PPLS, _______, \
     _______, _______, _______, _______, _______, KC_VOLU, _______,                          _______, _______, KC_P4,    KC_P5,   KC_P6, KC_PPLS, _______, \
     _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_VOLD, _______,                          _______, _______, KC_P1,    KC_P2,   KC_P3, KC_PENT, _______, \
-    RST_N,   _______, _______, _______,          _______, _______,_______,          _______,_______, _______,           KC_P0, KC_PDOT, KC_PENT, _______  \
+    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,           KC_P0, KC_PDOT, KC_PENT, _______  \
   ),
 
   /*
@@ -233,7 +232,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
     _______, _______, _______, _______, _______, _______, _______,                          _______, _______, _______, _______, _______, _______, _______, \
-    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, _______, _______, _______  \
+    TO_L0,   _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          _______, _______, _______, _______  \
   ),
 };
 
