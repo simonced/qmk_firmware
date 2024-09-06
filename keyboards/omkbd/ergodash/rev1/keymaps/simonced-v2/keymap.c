@@ -146,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------+------+------.      ,------+------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      |      |      |      |  =   |  {   |  }   |  [   |  ]   | pgup |
    * |-------------+------+------+------+------+------|      |      |      |------+------+------+------+------+-------------|
-   * |      |      |      |      |      |      |      |      |      |      |      |      |      | pscr |  ins |      | pgdn |
+   * |      |      |      |      |      |      |      |      |      |      |      |      |      | pscr |  brk | ins  | pgdn |
    * `---------------------------'      `--------------------'      `--------------------'      `---------------------------'
    */
   [LAYER_SYMB] = LAYOUT( \
@@ -154,7 +154,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR, JP_PERC,  KC_NO,                            KC_NO,   JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN,  JP_PIPE, KC_END,  \
     _______, _______, DESK_L,  DESK_R,  _______, _______, KC_NO,                            KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, JP_UNDS, JP_MINS, \
     _______, _______, _______, _______, _______, _______, _______,                          _______,  JP_EQL, JP_LCBR, JP_RCBR, JP_LBRC,  JP_RBRC, KC_PGUP, \
-    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          KC_PSCR, KC_INS,   _______, KC_PGDN  \
+    _______, _______, _______, _______,          _______, _______,_______,          _______,_______, _______,          KC_PSCR, KC_BRK,    KC_INS, KC_PGDN  \
   ),
 
   // Selection layer (will help when selecting text)
