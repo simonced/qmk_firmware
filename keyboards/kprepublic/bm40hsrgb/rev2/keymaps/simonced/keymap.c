@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [_RAISE] = LAYOUT_ortho_4x12_1x2uC(
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,       KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+    JP_ZKHK, KC_F1,   KC_F2,   KC_F3,   KC_F4,       KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
     _______, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,      JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, JP_UNDS, KC_F12,
     KC_CAPS, _______, _______, _______, _______,     _______, _______, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC, KC_DEL,
     _______, KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),      _______,     _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
