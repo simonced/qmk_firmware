@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT_ortho_4x12_1x2uC(
     _______, JP_1, JP_2,    JP_3,    _______, _______, JP_CIRC, JP_PIPE,     JP_TILD, JP_LABK, JP_RABK, JP_EQL,
     _______, JP_4, JP_5,    JP_6,    _______, _______, KC_LEFT, KC_DOWN,     KC_UP,   KC_RGHT, JP_MINS, JP_BSLS,
-    _______, JP_7, JP_8,    JP_9,    KC_MNXT, _______, _______, _______,     _______, _______, JP_QUES, _______,
+    _______, JP_7, JP_8,    JP_9,    KC_MNXT, _______, _______, _______,     _______, _______, _______, _______,
     _______, JP_0, KC_VOLD, KC_VOLU, _______,      KC_MPLY,     MO(_ADJUST), _______, _______, _______, _______
 ),
 
