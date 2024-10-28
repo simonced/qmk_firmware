@@ -27,6 +27,8 @@ enum layers {
 #define CTR_ESC MT(MOD_LCTL, KC_ESC)
 // shift and backspace on the same key
 #define SFT_BSP MT(MOD_LSFT, KC_BSPC)
+// shift and enter on the same key
+#define SFT_ENT MT(MOD_LSFT, KC_ENT)
 
 // eigo - lower
 #define ROMA_LW LT(_LOWER, JP_MHEN)
@@ -46,9 +48,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [_QWERTY] = LAYOUT_ortho_4x12_1x2uC(
-    KC_TAB,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    JP_AT,
+    KC_TAB,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     CTR_ESC,  KC_A,    KC_S,    KC_D,  KC_F,    KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, JP_COLN,
-    KC_LSFT,  KC_Z,    KC_X,    KC_C,  KC_V,    KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, SFT_BSP,
+    KC_LSFT,  KC_Z,    KC_X,    KC_C,  KC_V,    KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, SFT_ENT,
     KC_LCTL,  KC_LGUI, KC_LALT, KC_NO, ROMA_LW,     KC_SPC,    KANA_UP, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
@@ -64,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT_ortho_4x12_1x2uC(
     KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,       KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,
     JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,      JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, JP_UNDS, _______,
-    KC_CAPS, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,     _______, _______, KC_ENT,  _______, _______, _______, KC_DEL,
+    KC_CAPS, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,     _______, _______, JP_AT,   JP_GRV,   _______, _______, KC_DEL,
     _______, KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),      _______,     _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
