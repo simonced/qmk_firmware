@@ -25,11 +25,18 @@ enum layers {
 
 // ctrl and esc on the same key
 #define CTR_ESC MT(MOD_LCTL, KC_ESC)
-// shift and backspace on the same key
-#define SFT_BSP MT(MOD_LSFT, KC_BSPC)
-// shift and enter on the same key
-#define SFT_ENT MT(MOD_LSFT, KC_ENT)
+// ctrl and space on the same key
+#define CTRL_SPC MT(MOD_LCTL, KC_SPC)
 
+// shift and backspace on the same key
+// #define SFT_BSP MT(MOD_LSFT, KC_BSPC)
+
+// shift and enter on the same key
+// #define SFT_ENT MT(MOD_LSFT, KC_ENT)
+
+
+// F or lower
+#define F_LOWER LT(_LOWER, KC_F)
 // eigo - lower
 #define ROMA_LW LT(_LOWER, JP_MHEN)
 // kana - upper
@@ -49,16 +56,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT_ortho_4x12_1x2uC(
     KC_TAB,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    CTR_ESC,  KC_A,    KC_S,    KC_D,  KC_F,    KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, JP_COLN,
-    KC_LSFT,  KC_Z,    KC_X,    KC_C,  KC_V,    KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, SFT_ENT,
-    KC_LCTL,  KC_LGUI, KC_LALT, KC_NO, ROMA_LW,     KC_SPC,    KANA_UP, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_ESC,   KC_A,    KC_S,    KC_D,  F_LOWER, KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, KC_ENT,
+    KC_LSFT,  KC_Z,    KC_X,    KC_C,  KC_V,    KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_LSFT,
+    KC_LCTL,  KC_LGUI, KC_LALT, KC_NO, ROMA_LW,   CTRL_SPC,    KANA_UP, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 
 [_LOWER] = LAYOUT_ortho_4x12_1x2uC(
     _______, JP_1, JP_2,    JP_3,    _______, _______, JP_CIRC, JP_PIPE,     JP_TILD, JP_LABK, JP_RABK, JP_EQL,
-    _______, JP_4, JP_5,    JP_6,    _______, _______, KC_LEFT, KC_DOWN,     KC_UP,   KC_RGHT, JP_MINS, _______,
-    _______, JP_7, JP_8,    JP_9,    KC_MNXT, _______, _______, _______,     _______, _______, JP_BSLS, _______,
+    _______, JP_4, JP_5,    JP_6,    _______, _______, KC_LEFT, KC_DOWN,     KC_UP,   KC_RGHT, JP_MINS, JP_COLN,
+    _______, JP_7, JP_8,    JP_9,    KC_MNXT, _______, _______, _______,     _______, _______, JP_BSLS, JP_ASTR,
     _______, JP_0, KC_VOLD, KC_VOLU, _______,      KC_MPLY,     MO(_ADJUST), _______, _______, _______, _______
 ),
 
