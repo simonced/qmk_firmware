@@ -21,9 +21,11 @@ enum layers {
 // LT momentary toggle (like MO, but usable as specified key press)
 
 // ctrl and esc on the same key
-// #define CTR_ESC MT(MOD_LCTL, KC_ESC)
+#define CTR_ESC MT(MOD_LCTL, KC_ESC)
+// same with enter
+#define CTR_ENT MT(MOD_RCTL, KC_ENT)
 // ctrl and space on the same key
-#define CTRL_SPC MT(MOD_RCTL, KC_SPC)
+// #define CTRL_SPC MT(MOD_RCTL, KC_SPC)
 
 // shift and backspace on the same key
 // #define SFT_BSP MT(MOD_LSFT, KC_BSPC)
@@ -57,9 +59,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
     JP_ZKHK,  JP_1,   JP_2,    JP_3,  JP_4,    JP_5,  JP_CIRC,                         JP_AT,    JP_6,  JP_7,  JP_8,    JP_9,    JP_0,    JP_MINS,
     KC_TAB,   KC_Q,   KC_W,    KC_E,  KC_R,    KC_T,  JP_YEN,                          JP_LBRC,  KC_Y,  KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_ESC,   KC_A,   KC_S,    KC_D,  F_MOTI,  KC_G,  JP_BSLS,                         JP_RBRC,  KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, KC_ENT,
+    CTR_ESC,  KC_A,   KC_S,    KC_D,  F_MOTI,  KC_G,  JP_BSLS,                         JP_RBRC,  KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, CTR_ENT,
     KC_LSFT,  KC_Z,   KC_X,    KC_C,  V_SEL,   KC_B,  KC_F11,                          KC_F12,   KC_N,  KC_M,  JP_COMM, JP_DOT,  JP_SLSH, KC_LSFT,
-    KC_LCTL, KC_LGUI, KC_LALT, KC_NO,    ROMA_LW, CTRL_SPC, CTRL_SPC,           CTRL_SPC, CTRL_SPC, KANA_UP,     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
+    KC_LCTL, KC_LGUI, KC_LALT, KC_NO,    ROMA_LW, KC_SPC, KC_SPC,                   KC_SPC, KC_SPC, KANA_UP,     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
   ),
 
   [_LOWER] = LAYOUT(
