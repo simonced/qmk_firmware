@@ -23,7 +23,7 @@ enum layers {
 // ctrl and esc on the same key
 #define CTR_ESC MT(MOD_LCTL, KC_ESC)
 // same with enter
-#define CTR_ENT MT(MOD_RCTL, KC_ENT)
+// #define CTR_ENT MT(MOD_LCTL, KC_ENT)
 // ctrl and space on the same key
 // #define CTRL_SPC MT(MOD_RCTL, KC_SPC)
 
@@ -51,6 +51,15 @@ enum layers {
 #define SEL_E S(KC_END)
 
 
+// some key overrides
+const key_override_t spc_del_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPC, KC_DEL);
+
+// This globally defines all key overrides to be used
+const key_override_t *key_overrides[] = {
+	&spc_del_override
+};
+
+
 /*======================================================================*/
 /*layouts*/
 /*======================================================================*/
@@ -59,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
     JP_ZKHK,  JP_1,   JP_2,    JP_3,  JP_4,    JP_5,  JP_CIRC,                         JP_AT,    JP_6,  JP_7,  JP_8,    JP_9,    JP_0,    JP_MINS,
     KC_TAB,   KC_Q,   KC_W,    KC_E,  KC_R,    KC_T,  JP_YEN,                          JP_LBRC,  KC_Y,  KC_U,  KC_I,    KC_O,    KC_P,    KC_BSPC,
-    CTR_ESC,  KC_A,   KC_S,    KC_D,  F_MOTI,  KC_G,  JP_BSLS,                         JP_RBRC,  KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, CTR_ENT,
+    CTR_ESC,  KC_A,   KC_S,    KC_D,  F_MOTI,  KC_G,  JP_BSLS,                         JP_RBRC,  KC_H,  KC_J,  KC_K,    KC_L,    JP_SCLN, KC_ENT,
     KC_LSFT,  KC_Z,   KC_X,    KC_C,  V_SEL,   KC_B,  KC_F11,                          KC_F12,   KC_N,  KC_M,  JP_COMM, JP_DOT,  JP_SLSH, KC_LSFT,
     KC_LCTL, KC_LGUI, KC_LALT, KC_NO,    ROMA_LW, KC_SPC, KC_SPC,                   KC_SPC, KC_SPC, KANA_UP,     KC_LEFT, KC_DOWN, KC_UP, KC_RGHT
   ),
