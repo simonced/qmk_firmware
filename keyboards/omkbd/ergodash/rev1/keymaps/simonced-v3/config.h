@@ -29,5 +29,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #undef PERMISSIVE_HOLD
 // #undef PREVENT_STUCK_MODIFIERS
 
-// #undef TAPPING_TERM
-// #define TAPPING_TERM 250
+#undef TAPPING_TERM
+#define TAPPING_TERM 150
