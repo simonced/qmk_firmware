@@ -29,8 +29,9 @@ enum layers {
 #define CTR_ESC MT(MOD_LCTL, KC_ESC)
 // same for Enter
 #define CTR_ENT MT(MOD_LCTL, KC_ENT)
+
 // CTRL and SPC on the same key
-// #define CTRL_SPC MT(MOD_LCTL, KC_SPC)
+#define CTR_SPC MT(MOD_LCTL, KC_SPC)
 
 // shift and backspace on the same key
 // #define SFT_BSP MT(MOD_LSFT, KC_BSPC)
@@ -44,6 +45,8 @@ enum layers {
 #define V_SEL  LT(_SEL,  KC_V)
 // eigo - lower
 #define ROMA_LW LT(_LOWER, JP_MHEN)
+// left - lower (to type numbers with left hand while holding layer on right hand?)
+#define LEFT_LW LT(_LOWER, KC_LEFT)
 // kana - upper
 #define KANA_UP LT(_RAISE, JP_HENK)
 
@@ -72,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     CTR_ESC,  KC_A,    KC_S,    KC_D,  F_MOTI,  KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, CTR_ENT,
     KC_LSFT,  KC_Z,    KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_LSFT,
-    KC_LCTL,  KC_LGUI, KC_LALT, KC_NO, ROMA_LW,    KC_SPC,     KANA_UP, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_LCTL,  KC_LGUI, KC_LALT, KC_NO, ROMA_LW,    CTR_SPC,    KANA_UP, LEFT_LW, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 [_LOWER] = LAYOUT_ortho_4x12_1x2uC(
