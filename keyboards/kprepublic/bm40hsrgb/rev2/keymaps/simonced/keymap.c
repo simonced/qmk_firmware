@@ -20,6 +20,7 @@ enum layers {
   _QWERTY,
   _LOWER,
   _RAISE,
+  _FN,
   _MOTI,
   _SEL,
   _ADJUST
@@ -29,9 +30,8 @@ enum layers {
 #define CTR_ESC MT(MOD_LCTL, KC_ESC)
 // same for Enter
 #define CTR_ENT MT(MOD_LCTL, KC_ENT)
-
 // CTRL and SPC on the same key
-#define CTR_SPC MT(MOD_LCTL, KC_SPC)
+// #define CTR_SPC MT(MOD_LCTL, KC_SPC)
 
 // shift and backspace on the same key
 // #define SFT_BSP MT(MOD_LSFT, KC_BSPC)
@@ -49,6 +49,9 @@ enum layers {
 #define LEFT_LW LT(_LOWER, KC_LEFT)
 // kana - upper
 #define KANA_UP LT(_RAISE, JP_HENK)
+// specific function keys
+#define FN LT(_FN, KC_NO)
+#define RGHT_FN LT(_FN, KC_RGHT)
 
 // text selection (for _SE layer)
 #define SEL_L S(KC_LEFT)
@@ -75,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     CTR_ESC,  KC_A,    KC_S,    KC_D,  F_MOTI,  KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, CTR_ENT,
     KC_LSFT,  KC_Z,    KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_LSFT,
-    KC_LCTL,  KC_LGUI, KC_LALT, KC_NO, ROMA_LW,    CTR_SPC,    KANA_UP, LEFT_LW, KC_DOWN, KC_UP,   KC_RGHT
+    KC_LCTL,  KC_LGUI, KC_LALT, FN,    ROMA_LW,     KC_SPC,    KANA_UP, LEFT_LW, KC_DOWN, KC_UP,   RGHT_FN
 ),
 
 [_LOWER] = LAYOUT_ortho_4x12_1x2uC(
@@ -86,10 +89,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_RAISE] = LAYOUT_ortho_4x12_1x2uC(
-    KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,       KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,
-    JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,      JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, JP_UNDS, JP_PIPE,
-    KC_CAPS, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,     _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
+    JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,        JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, _______, _______,
+    KC_CAPS, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,       _______, _______, _______, _______, _______, JP_UNDS, JP_PIPE,
+    _______, _______, _______, _______, _______,       _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
     _______, KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),      _______,     _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+),
+
+[_FN] = LAYOUT_ortho_4x12_1x2uC(
+    KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,         KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,
+    _______, _______, _______, _______, _______,       _______, _______, _______,  _______, _______, _______, _______,
+    _______, _______, _______, _______, _______,       _______, _______, _______,  _______, _______, _______, _______,
+    _______, _______, _______, _______,        _______,         _______, _______, _______,  _______, _______, _______
 ),
 
 [_MOTI] = LAYOUT_ortho_4x12_1x2uC(
@@ -126,4 +136,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 )
 
 };
-
