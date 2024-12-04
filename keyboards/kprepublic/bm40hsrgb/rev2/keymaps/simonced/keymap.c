@@ -90,8 +90,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_RAISE] = LAYOUT_ortho_4x12_1x2uC(
     JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,        JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, _______, _______,
-    KC_CAPS, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,       _______, _______, _______, _______, _______, JP_UNDS, JP_PIPE,
-    _______, _______, _______, _______, _______,       _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
+    _______, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,       _______, _______, _______, _______, _______, JP_UNDS, JP_PIPE,
+    KC_CAPS, _______, _______, _______, _______,       _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
     _______, KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),      _______,     _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
