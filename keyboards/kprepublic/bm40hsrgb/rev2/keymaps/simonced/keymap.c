@@ -31,7 +31,7 @@ enum layers {
 // CTRL and TAB on the same key
 #define CTR_TAB MT(MOD_LCTL, KC_TAB)
 // same for Enter
-#define CTR_ENT MT(MOD_LCTL, KC_ENT)
+#define CTR_ENT MT(MOD_RCTL, KC_ENT)
 // CTRL and SPC on the same key
 // #define CTR_SPC MT(MOD_LCTL, KC_SPC)
 
@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_ortho_4x12_1x2uC(
     KC_ESC,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     CTR_TAB,  KC_A,    KC_S,    KC_D,  F_MOTI,  KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, CTR_ENT,
-    KC_LSFT,  KC_Z,    KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_LSFT,
+    KC_LSFT,  KC_Z,    KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_RSFT,
     KC_LCTL,  KC_LGUI, KC_LALT, FN,    ROMA_LW,     KC_SPC,    KANA_UP, LEFT_LW, KC_DOWN, KC_UP,   RGHT_FN
 ),
 
@@ -91,10 +91,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_RAISE] = LAYOUT_ortho_4x12_1x2uC(
-    JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,        JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, _______, _______,
-    _______, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,       _______, _______, _______, _______, _______, JP_UNDS, JP_PIPE,
-    KC_CAPS, _______, _______, _______, _______,       _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
-    _______, KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),      _______,     _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+    JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,   JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, _______, _______,
+    _______, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,  _______, _______, KC_INS,  KC_DEL,  _______, JP_UNDS, JP_PIPE,
+    KC_CAPS, _______, _______, _______, _______,  _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
+    _______, KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),    _______,    _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ),
 
 [_FN] = LAYOUT_ortho_4x12_1x2uC(
@@ -108,14 +108,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN,   KC_UP,  KC_RGHT, KC_PGUP, _______,
     _______, _______, _______, _______, _______, _______, _______, KC_HOME,  KC_END,  _______, KC_PGDN, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+    _______, _______, _______, _______, _______,     _______,      _______, _______,  _______, _______, _______
 ),
 
 [_SEL] = LAYOUT_ortho_4x12_1x2uC(
     _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, SEL_L,   SEL_D,    SEL_U,    SEL_R,   KC_NO, _______,
-    _______, _______, _______, _______, _______, _______, KC_NO,   SEL_H,    SEL_E,    KC_NO,   KC_NO, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+    _______, _______, _______, _______, _______, _______, SEL_L,   SEL_D,    SEL_U,    SEL_R,   KC_NO,   _______,
+    _______, _______, _______, _______, _______, _______, KC_NO,   SEL_H,    SEL_E,    KC_NO,   KC_NO,   _______,
+    _______, _______, _______, _______, _______,      _______,      _______, _______,  _______, _______, _______
 ),
 
 /* Adjust (Lower + Raise)
