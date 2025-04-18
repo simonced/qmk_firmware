@@ -28,12 +28,17 @@ enum layers {
 
 // CTRL and ESC on the same key
 //#define CTR_ESC MT(MOD_LCTL, KC_ESC)
+
 // CTRL and TAB on the same key
 #define CTR_TAB MT(MOD_LCTL, KC_TAB)
 // same for Enter
 #define CTR_ENT MT(MOD_RCTL, KC_ENT)
+
 // CTRL and SPC on the same key
 // #define CTR_SPC MT(MOD_LCTL, KC_SPC)
+
+// ALT and Z on the same key
+#define ALT_Z MT(MOD_LALT, KC_Z)
 
 // shift and backspace on the same key
 // #define SFT_BSP MT(MOD_LSFT, KC_BSPC)
@@ -79,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT_ortho_4x12_1x2uC(
     KC_ESC,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     CTR_TAB,  KC_A,    KC_S,    KC_D,  F_MOTI,  KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, CTR_ENT,
-    KC_LSFT,  KC_Z,    KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_RSFT,
+    KC_LSFT,  ALT_Z,   KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_RSFT,
     KC_LCTL,  KC_LGUI, KC_LALT, FN,    ROMA_LW,     KC_SPC,    KANA_UP, LEFT_LW, KC_DOWN, KC_UP,   RGHT_FN
 ),
 
