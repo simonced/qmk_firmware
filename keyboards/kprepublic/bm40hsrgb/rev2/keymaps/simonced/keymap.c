@@ -99,8 +99,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,   JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, _______, _______,
     _______, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,  _______, _______, KC_INS,  KC_DEL,  _______, JP_UNDS, JP_PIPE,
     KC_CAPS, _______, _______, _______, _______,  _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
-    _______, KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),    _______,    _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
-),
+    KC_NUM,  KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),    _______,    _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+), 
 
 [_FN] = LAYOUT_ortho_4x12_1x2uC(
     KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,         KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,
