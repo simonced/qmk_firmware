@@ -61,8 +61,6 @@ enum layers {
 #define LEFT_LW LT(_LOWER, KC_LEFT)
 // right - fn (activate fn keys with right, easy F12!)
 #define RGHT_FN LT(_FN, KC_RGHT)
-// game OFF
-#define ADJ_ESC LT(_ADJUST, KC_ESC)
 // text selection (for _SE layer)
 #define SEL_L S(KC_LEFT)
 #define SEL_D S(KC_DOWN)
@@ -85,14 +83,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [_QWERTY] = LAYOUT_ortho_4x12_1x2uC(
-    ADJ_ESC,  KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_ESC,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_TAB,   KC_A,    KC_S,    KC_D,  F_MOTI,  KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, KC_ENT,
     KC_LSFT,  ALT_Z,   KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_RSFT,
     KC_LCTL,  KC_LGUI, KC_LALT, FN,  MO(_LOWER),   CTR_SPC,  MO(_RAISE), LEFT_LW, KC_DOWN, KC_UP,  RGHT_FN
 ),
 
 [_GAME] = LAYOUT_ortho_4x12_1x2uC(
-    ADJ_ESC,  KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+    KC_ESC,   KC_Q,    KC_W,    KC_E,  KC_R,    KC_T,    KC_Y, KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     KC_TAB,   KC_A,    KC_S,    KC_D,  KC_F,    KC_G,    KC_H, KC_J,    KC_K,    KC_L,    JP_SCLN, KC_ENT,
     KC_LSFT,  ALT_Z,   KC_X,    KC_C,  V_SEL,   KC_B,    KC_N, KC_M,    JP_COMM, JP_DOT,  JP_SLSH, KC_RSFT,
     KC_LCTL,  KC_NO,   KC_LALT, FN,  MO(_LOWER),   KC_SPC,  MO(_RAISE), KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT
@@ -102,19 +100,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     JP_ZKHK, JP_1, JP_2,   JP_3,     _______, _______, _______, _______,     _______, JP_LABK, JP_RABK, JP_EQL,
     _______, JP_4, JP_5,   JP_6,     KC_VOLU, _______, _______, _______,     _______, _______, JP_MINS, JP_COLN,
     _______, JP_7, JP_8,   JP_9,     KC_VOLD, KC_MPLY, KC_MNXT, _______,     _______, _______, _______, JP_ASTR,
-    _______, JP_0, JP_DOT,  _______, _______,        _______,       _______, _______, _______, _______, _______
+    _______, JP_0, JP_DOT,  _______, _______,        _______,   MO(_ADJUST), _______, _______, _______, _______
 ),
 
 [_RAISE] = LAYOUT_ortho_4x12_1x2uC(
     JP_ZKHK, JP_EXLM, JP_DQUO, JP_HASH, JP_DLR,   JP_PERC, JP_AMPR, JP_QUOT, JP_LPRN, JP_RPRN, _______, JP_EQL,
     _______, JP_LCBR, JP_RCBR, JP_LBRC, JP_RBRC,  _______, _______, _______, _______, _______, JP_UNDS, JP_PIPE,
     KC_CAPS, _______, _______, _______, _______,  _______, JP_CIRC, JP_AT,   JP_GRV,  JP_TILD, JP_BSLS, _______,
-    KC_NUM,  KC_PSCR, KC_INS,  KC_BRK,  _______,       _______,     _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
+    KC_NUM,  KC_PSCR, KC_INS,  KC_BRK,  MO(_ADJUST),    _______,    _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END
 ), 
 
 [_FN] = LAYOUT_ortho_4x12_1x2uC(
     KC_F11,  KC_F1,   KC_F2,   KC_F3,   KC_F4,         KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,
-    _______, _______, _______, _______, _______,       _______, _______, _______,  _______, _______, _______, _______,
+    _______, _______, _______, _______, _______,       TG(_GAME), _______, _______,  _______, _______, _______, _______,
     _______, _______, _______, _______, _______,       _______, _______, _______,  _______, _______, _______, _______,
     _______, _______, _______, _______,        _______,         _______, _______, _______,  _______, _______, _______
 ),
@@ -147,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_ortho_4x12_1x2uC(
     _______, QK_BOOT, DB_TOGG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
-    _______, _______, _______, _______, _______, TG(_GAME), _______, _______,  _______,  _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
 )
